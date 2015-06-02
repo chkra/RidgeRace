@@ -1,0 +1,153 @@
+#NEXUS
+begin taxa;
+	dimensions ntax=74;
+	taxlabels
+	'C15 S1 23 3'
+	'C14 S47 237 2'
+	'C14 S17 14 12'
+	'C15 S17 0 165'
+	'C15 S17 281 2'
+	'C14 S15 159 2'
+	'C14 S41 563 2'
+	'C14 S15 135 2'
+	'C14 S24 94 2'
+	'C14 S15 90 2'
+	'C14 S0 0 298'
+	'C14 S17 123 2'
+	'C14 S12 105 2'
+	'C14 S36 144 3'
+	'C14 S1 10 5'
+	'C14 S25 649 3'
+	'C14 S15 13 7'
+	'C17 S37 116 3'
+	'C16 S37 201 2'
+	'C16 S16 150 3'
+	'C18 S39 223 2'
+	'C18 S44 200 2'
+	'C13 S23 107 3'
+	'C13 S16 64 2'
+	'C13 S38 352 2'
+	'C13 S23 124 3'
+	'C13 S20 306 2'
+	'C13 S19 136 4'
+	'C4 S37 208 2'
+	'C4 S11 273 2'
+	'C4 S16 54 2'
+	'C4 S37 178 3'
+	'C12 S27 352 3'
+	'C1 S10 108 4'
+	'C2 S10 10 17'
+	'C1 S13 53 2'
+	'C1 S27 1049 2'
+	'C1 S37 378 2'
+	'C1 S27 1005 2'
+	'C1 S13 11 16'
+	'C1 S11 106 6'
+	'C19 S31 328 2'
+	'C9 S14 116 2'
+	'C9 S37 101 3'
+	'C9 S37 255 2'
+	'C9 S27 1075 2'
+	'C5 S34 402 2'
+	'C3 S16 111 3'
+	'C3 S31 220 3'
+	'C3 S19 156 4'
+	'C3 S13 134 3'
+	'C12 S11 0 93'
+	'C8 S23 546 2'
+	'C8 S10 102 4'
+	'C8 S20 555 2'
+	'C8 S10 301 2'
+	'C8 S45 463 2'
+	'C8 S38 240 2'
+	'C7 S10 105 3'
+	'C6 S10 0 362'
+	'C11 S41 495 2'
+	'C11 S9 143 2'
+	'C11 S9 149 2'
+	'C11 S1 19 3'
+	'C11 S40 141 2'
+	'C11 S29 14 11'
+	'C11 S10 103 3'
+	'C11 S12 109 3'
+	'C11 S0 10 8'
+	'C11 S12 142 2'
+	'C11 S10 230 3'
+	'C11 S17 142 3'
+	'C11 S0 2 59'
+	'C10 S10 338 4'
+;
+end;
+
+begin trees;
+	tree T = [&R] (((('C15 S1 23 3'[&ridgePheno=-10.02,pH=4.3,ridge=4.3]:0.054236,(('C14 S47 237 2'[&ridgePheno=12.58,pH=5.03,ridge=5.03]:0.034399,(('C14 S17 14 12'[&ridgePheno=-17.41,pH=3.98,ridge=3.98]:0.022244,('C15 S17 0 165'[&ridgePheno=-19.05,pH=3.83,ridge=3.83]:0.008781,'C15 S17 281 2'[&ridgePheno=1.19,pH=4.01,ridge=4.01]:0.008781)[&ridgePheno=-27.38,label="i12",ridge=4.0]:0.013463)[&ridgePheno=-23.33,label="i10",ridge=4.37]:0.008284,'C14 S15 159 2'[&ridgePheno=13.7,pH=4.98,ridge=4.98]:0.030528)[&ridgePheno=-9.17,label="i9",ridge=4.56]:0.003871)[&ridgePheno=-14.65,label="i7",ridge=4.6]:0.00732,(('C14 S41 563 2'[&ridgePheno=1.22,pH=5.0,ridge=5.0]:0.020794,('C14 S15 135 2'[&ridgePheno=-15.64,pH=4.79,ridge=4.79]:0.014422,'C14 S24 94 2'[&ridgePheno=30.6,pH=5.46,ridge=5.46]:0.014422)[&ridgePheno=6.61,label="i19",ridge=5.02]:0.006372)[&ridgePheno=15.5,label="i17",ridge=4.97]:0.014147,(('C14 S15 90 2'[&ridgePheno=-8.43,pH=4.51,ridge=4.51]:0.028265,('C14 S0 0 298'[&ridgePheno=-3.18,pH=4.46,ridge=4.46]:0.017159,'C14 S17 123 2'[&ridgePheno=-29.32,pH=4.01,ridge=4.01]:0.017159)[&ridgePheno=-21.04,label="i25",ridge=4.51]:0.011107)[&ridgePheno=-3.93,label="i23",ridge=4.75]:0.001795,('C14 S12 105 2'[&ridgePheno=26.27,pH=5.47,ridge=5.47]:0.025062,'C14 S36 144 3'[&ridgePheno=29.05,pH=5.54,ridge=5.54]:0.025062)[&ridgePheno=11.03,label="i28",ridge=4.81]:0.004998)[&ridgePheno=0.07,label="i22",ridge=4.76]:0.00488)[&ridgePheno=7.53,label="i16",ridge=4.76]:0.006779)[&ridgePheno=-11.15,label="i6",ridge=4.7]:0.012516)[&ridgePheno=-14.36,label="i4",ridge=4.84]:0.013347,('C14 S1 10 5'[&ridgePheno=-5.03,pH=4.94,ridge=4.94]:0.040939,('C14 S25 649 3'[&ridgePheno=18.23,pH=5.61,ridge=5.61]:0.015487,'C14 S15 13 7'[&ridgePheno=-13.92,pH=5.11,ridge=5.11]:0.015487)[&ridgePheno=7.09,label="i33",ridge=5.33]:0.025452)[&ridgePheno=4.15,label="i31",ridge=5.15]:0.026644)[&ridgePheno=-26.22,label="i3",ridge=5.04]:0.0285,(('C17 S37 116 3'[&ridgePheno=37.19,pH=8.46,ridge=8.46]:0.048107,('C16 S37 201 2'[&ridgePheno=96.3,pH=8.46,ridge=8.46]:0.020756,'C16 S16 150 3'[&ridgePheno=-102.22,pH=4.33,ridge=4.33]:0.020756)[&ridgePheno=-7.8,label="i39",ridge=6.46]:0.027351)[&ridgePheno=5.67,label="i37",ridge=6.67]:0.011625,('C18 S39 223 2'[&ridgePheno=10.6,pH=7.03,ridge=7.03]:0.016825,'C18 S44 200 2'[&ridgePheno=-8.35,pH=6.71,ridge=6.71]:0.016825)[&ridgePheno=5.75,label="i42",ridge=6.85]:0.042908)[&ridgePheno=22.6,label="i36",ridge=6.6]:0.03635)[&ridgePheno=-10.85,label="i2",ridge=5.78]:0.036388,((('C13 S23 107 3'[&ridgePheno=3.89,pH=6.7,ridge=6.7]:0.023449,('C13 S16 64 2'[&ridgePheno=3.31,pH=6.68,ridge=6.68]:0.017532,'C13 S38 352 2'[&ridgePheno=3.31,pH=6.68,ridge=6.68]:0.017532)[&ridgePheno=2.23,label="i49",ridge=6.62]:0.005917)[&ridgePheno=12.61,label="i47",ridge=6.61]:0.02322,('C13 S23 124 3'[&ridgePheno=13.0,pH=6.66,ridge=6.66]:0.034203,('C13 S20 306 2'[&ridgePheno=9.54,pH=6.25,ridge=6.25]:0.021378,'C13 S19 136 4'[&ridgePheno=-31.54,pH=5.37,ridge=5.37]:0.021378)[&ridgePheno=-13.2,label="i54",ridge=6.05]:0.012825)[&ridgePheno=-8.09,label="i52",ridge=6.21]:0.012466)[&ridgePheno=-5.25,label="i46",ridge=6.32]:0.04962,(((('C4 S37 208 2'[&ridgePheno=33.65,pH=8.46,ridge=8.46]:0.016878,'C4 S11 273 2'[&ridgePheno=8.26,pH=8.03,ridge=8.03]:0.016878)[&ridgePheno=41.97,label="i60",ridge=7.89]:0.016899,'C4 S16 54 2'[&ridgePheno=-84.33,pH=4.33,ridge=4.33]:0.033777)[&ridgePheno=-0.2,label="i59",ridge=7.18]:0.014876,'C4 S37 178 3'[&ridgePheno=26.22,pH=8.46,ridge=8.46]:0.048653)[&ridgePheno=15.98,label="i58",ridge=7.18]:0.030408,(((('C12 S27 352 3'[&ridgePheno=11.23,pH=8.04,ridge=8.04]:0.045889,(('C1 S10 108 4'[&ridgePheno=11.66,pH=8.02,ridge=8.02]:0.035955,('C2 S10 10 17'[&ridgePheno=-29.29,pH=6.68,ridge=6.68]:0.03183,('C1 S13 53 2'[&ridgePheno=27.55,pH=8.38,ridge=8.38]:0.024844,'C1 S27 1049 2'[&ridgePheno=13.88,pH=8.04,ridge=8.04]:0.024844)[&ridgePheno=11.65,label="i75",ridge=7.69]:0.006987)[&ridgePheno=3.08,label="i73",ridge=7.61]:0.004125)[&ridgePheno=7.18,label="i71",ridge=7.6]:0.006703,(('C1 S37 378 2'[&ridgePheno=24.16,pH=8.46,ridge=8.46]:0.017357,'C1 S27 1005 2'[&ridgePheno=0.04,pH=8.04,ridge=8.04]:0.017357)[&ridgePheno=16.19,label="i79",ridge=8.04]:0.011614,('C1 S13 11 16'[&ridgePheno=22.88,pH=8.41,ridge=8.41]:0.024175,'C1 S11 106 6'[&ridgePheno=-18.0,pH=7.42,ridge=7.42]:0.024175)[&ridgePheno=0.97,label="i82",ridge=7.86]:0.004797)[&ridgePheno=21.85,label="i78",ridge=7.85]:0.013686)[&ridgePheno=8.62,label="i70",ridge=7.55]:0.003231)[&ridgePheno=21.25,label="i68",ridge=7.52]:0.007295,'C19 S31 328 2'[&ridgePheno=-5.82,pH=7.06,ridge=7.06]:0.053184)[&ridgePheno=16.0,label="i67",ridge=7.37]:0.005708,(('C9 S14 116 2'[&ridgePheno=0.04,pH=8.02,ridge=8.02]:0.027799,(('C9 S37 101 3'[&ridgePheno=13.45,pH=8.47,ridge=8.47]:0.01181,'C9 S37 255 2'[&ridgePheno=12.61,pH=8.46,ridge=8.46]:0.01181)[&ridgePheno=21.57,label="i90",ridge=8.31]:0.009778,'C9 S27 1075 2'[&ridgePheno=-2.73,pH=8.04,ridge=8.04]:0.021588)[&ridgePheno=12.92,label="i89",ridge=8.1]:0.006211)[&ridgePheno=29.18,label="i87",ridge=8.02]:0.014022,'C5 S34 402 2'[&ridgePheno=-39.43,pH=5.96,ridge=5.96]:0.04182)[&ridgePheno=19.43,label="i86",ridge=7.61]:0.017072)[&ridgePheno=48.12,label="i66",ridge=7.28]:0.012209,(((('C3 S16 111 3'[&ridgePheno=-81.69,pH=4.33,ridge=4.33]:0.02675,('C3 S31 220 3'[&ridgePheno=30.85,pH=7.31,ridge=7.31]:0.01528,'C3 S19 156 4'[&ridgePheno=6.09,pH=6.93,ridge=6.93]:0.01528)[&ridgePheno=27.73,label="i100",ridge=6.84]:0.011471)[&ridgePheno=-4.77,label="i98",ridge=6.52]:0.007492,'C3 S13 134 3'[&ridgePheno=26.72,pH=7.47,ridge=7.47]:0.034243)[&ridgePheno=3.44,label="i97",ridge=6.55]:0.023832,(('C12 S11 0 93'[&ridgePheno=39.51,pH=8.14,ridge=8.14]:0.041291,((('C8 S23 546 2'[&ridgePheno=-9.58,pH=6.18,ridge=6.18]:0.019379,'C8 S10 102 4'[&ridgePheno=-6.49,pH=6.24,ridge=6.24]:0.019379)[&ridgePheno=-4.61,label="i109",ridge=6.37]:0.005556,('C8 S20 555 2'[&ridgePheno=1.22,pH=6.4,ridge=6.4]:0.016606,('C8 S10 301 2'[&ridgePheno=-73.52,pH=5.71,ridge=5.72]:0.008791,'C8 S45 463 2'[&ridgePheno=71.35,pH=7.0,ridge=6.99]:0.008791)[&ridgePheno=-1.93,label="i114",ridge=6.36]:0.007815)[&ridgePheno=-1.45,label="i112",ridge=6.38]:0.008329)[&ridgePheno=-6.57,label="i108",ridge=6.39]:0.006549,'C8 S38 240 2'[&ridgePheno=7.78,pH=6.68,ridge=6.68]:0.031484)[&ridgePheno=-7.42,label="i107",ridge=6.43]:0.009807)[&ridgePheno=2.51,label="i105",ridge=6.51]:0.012527,('C7 S10 105 3'[&ridgePheno=4.32,pH=6.67,ridge=6.67]:0.044567,'C6 S10 0 362'[&ridgePheno=-3.53,pH=6.32,ridge=6.32]:0.044567)[&ridgePheno=0.16,label="i118",ridge=6.48]:0.009251)[&ridgePheno=0.93,label="i104",ridge=6.48]:0.004256)[&ridgePheno=2.0,label="i96",ridge=6.47]:0.005507,(('C11 S41 495 2'[&ridgePheno=-10.89,pH=4.46,ridge=4.46]:0.038112,((('C11 S9 143 2'[&ridgePheno=-22.84,pH=4.16,ridge=4.16]:0.024436,('C11 S9 149 2'[&ridgePheno=-40.18,pH=4.16,ridge=4.17]:0.007456,'C11 S1 19 3'[&ridgePheno=33.6,pH=4.72,ridge=4.72]:0.007456)[&ridgePheno=-14.96,label="i128",ridge=4.46]:0.01698)[&ridgePheno=-10.82,label="i126",ridge=4.72]:0.005959,('C11 S40 141 2'[&ridgePheno=-10.94,pH=4.5,ridge=4.5]:0.023646,('C11 S29 14 11'[&ridgePheno=-67.49,pH=3.85,ridge=3.86]:0.01328,'C11 S10 103 3'[&ridgePheno=66.53,pH=5.64,ridge=5.63]:0.01328)[&ridgePheno=-0.75,label="i133",ridge=4.75]:0.010366)[&ridgePheno=-3.61,label="i131",ridge=4.76]:0.006748)[&ridgePheno=-11.93,label="i125",ridge=4.78]:0.005076,(('C11 S12 109 3'[&ridgePheno=11.86,pH=5.47,ridge=5.47]:0.009856,'C11 S0 10 8'[&ridgePheno=10.85,pH=5.46,ridge=5.46]:0.009856)[&ridgePheno=39.16,label="i137",ridge=5.35]:0.016994,(('C11 S12 142 2'[&ridgePheno=-19.06,pH=4.28,ridge=4.28]:0.019353,'C11 S10 230 3'[&ridgePheno=8.77,pH=4.82,ridge=4.82]:0.019353)[&ridgePheno=-2.8,label="i141",ridge=4.65]:0.005271,('C11 S17 142 3'[&ridgePheno=-25.45,pH=3.97,ridge=3.97]:0.016092,'C11 S0 2 59'[&ridgePheno=-37.21,pH=3.78,ridge=3.78]:0.016092)[&ridgePheno=-33.22,label="i144",ridge=4.38]:0.008532)[&ridgePheno=-9.85,label="i140",ridge=4.66]:0.002227)[&ridgePheno=-18.28,label="i136",ridge=4.69]:0.00862)[&ridgePheno=-11.81,label="i124",ridge=4.84]:0.002641)[&ridgePheno=-74.03,label="i122",ridge=4.88]:0.015562,'C10 S10 338 4'[&ridgePheno=18.12,pH=7.0,ridge=7.0]:0.053674)[&ridgePheno=-43.79,label="i121",ridge=6.03]:0.009907)[&ridgePheno=-30.51,label="i95",ridge=6.46]:0.00752)[&ridgePheno=-0.92,label="i65",ridge=6.69]:0.007959)[&ridgePheno=7.07,label="i57",ridge=6.7]:0.017228)[&ridgePheno=11.02,label="i45",ridge=6.58]:0.036181)[&ridgePheno=6.18,label="i1",ridge=6.18];
+end;
+
+begin figtree;
+	set appearance.backgroundColorAttribute="User Selection";
+	set appearance.backgroundColour=#-1;
+	set appearance.branchColorAttribute="ridgePheno";
+	set appearance.branchLineWidth=4.0;
+	set appearance.foregroundColour=#-16777216;
+	set appearance.selectionColour=#-2144520576;
+	set branchLabels.colorAttribute="User Selection";
+	set branchLabels.displayAttribute="Branch times";
+	set branchLabels.fontName="sansserif";
+	set branchLabels.fontSize=8;
+	set branchLabels.fontStyle=0;
+	set branchLabels.isShown=false;
+	set branchLabels.significantDigits=4;
+	set layout.expansion=0;
+	set layout.layoutType="RECTILINEAR";
+	set layout.zoom=0;
+	set nodeBars.barWidth=4.0;
+	set nodeLabels.colorAttribute="User Selection";
+	set nodeLabels.displayAttribute="Node ages";
+	set nodeLabels.fontName="sansserif";
+	set nodeLabels.fontSize=8;
+	set nodeLabels.fontStyle=0;
+	set nodeLabels.isShown=false;
+	set nodeLabels.significantDigits=4;
+	set polarLayout.alignTipLabels=false;
+	set polarLayout.angularRange=0;
+	set polarLayout.rootAngle=0;
+	set polarLayout.rootLength=100;
+	set polarLayout.showRoot=true;
+	set radialLayout.spread=0.0;
+	set rectilinearLayout.alignTipLabels=false;
+	set rectilinearLayout.curvature=0;
+	set rectilinearLayout.rootLength=100;
+	set scale.offsetAge=0.0;
+	set scale.rootAge=1.0;
+	set scale.scaleFactor=1.0;
+	set scale.scaleRoot=false;
+	set scaleAxis.automaticScale=true;
+	set scaleAxis.fontSize=8.0;
+	set scaleAxis.isShown=false;
+	set scaleAxis.lineWidth=1.0;
+	set scaleAxis.majorTicks=1.0;
+	set scaleAxis.origin=0.0;
+	set scaleAxis.reverseAxis=false;
+	set scaleAxis.showGrid=true;
+	set scaleAxis.significantDigits=4;
+	set scaleBar.automaticScale=true;
+	set scaleBar.fontSize=10.0;
+	set scaleBar.isShown=true;
+	set scaleBar.lineWidth=1.0;
+	set scaleBar.scaleRange=0.0;
+	set scaleBar.significantDigits=4;
+	set tipLabels.colorAttribute="pH";
+	set tipLabels.displayAttribute="Names";
+	set tipLabels.fontName="Bitstream Charter";
+	set tipLabels.fontSize=16;
+	set tipLabels.fontStyle=0;
+	set tipLabels.isShown=true;
+	set tipLabels.significantDigits=4;
+	set trees.order=false;
+	set trees.orderType="increasing";
+	set trees.rooting=false;
+	set trees.rootingType="User Selection";
+	set trees.transform=false;
+	set trees.transformType="cladogram";
+end;
+
