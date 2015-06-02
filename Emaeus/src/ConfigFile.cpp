@@ -63,7 +63,7 @@ Chameleon const& ConfigFile::Value(std::string const& section,
 			section + '/' + entry);
 
 	if (ci == content_.end()) {
-		std::cerr << section << "::" << entry << std::endl;
+		std::cerr << "Configuration error: " << std::endl << "  The entry '" << entry << "' of the section '" << section << "' in the configuration file could not be found." << std::endl << "  Please check for it's existence." << std::endl;
 		throw "ERROR in ConfigFile::Value: value does not exist";
 	}
 
