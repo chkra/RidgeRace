@@ -263,8 +263,7 @@ void RR_Performer::run() {
 	 we add it to the simulation index here basically because
 	 the "correct" (gold standard) values are stored in the
 	 simulation index by default*/
-	FloatTreeAnnotation* simulation = new FloatTreeAnnotation(_rri.phenoPath,
-			_baseTree.getRoot(), Constants::simulationIndex);
+	FloatTreeAnnotation* simulation = new FloatTreeAnnotation(_rri.phenoPath,_baseTree.getRoot(), Constants::simulationIndex);
 	_baseTree.addAnnotation(Constants::simulationIndex, simulation);
 
 	Ridge_Single* rSingle = new Ridge_Single(_id, false);
