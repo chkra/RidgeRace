@@ -57,7 +57,7 @@ checkDependencies:
 	@echo "All dependencies are met."
 
 writeSettings:
-	printf "#include \"prefix.h\"\n\nnamespace RidgeRace {\n\tconst char prefix[] = \"$(PREFIX)\";\n\tconst char progname[] = \"$(PROGNAME)\";\n}\n" > src/prefix.cpp
+	printf "#include \"prefix.h\"\n#include <cstdlib>\n#include <cstdio>\n\nnamespace RidgeRace {\n\tconst char prefix[] = \"$(PREFIX)\";\n\tconst char progname[] = \"$(PROGNAME)\";\n\tconst char* tmpdir = std::getenv(\"TMPDIR\");\n}\n" > src/prefix.cpp
 
 install:
 	@if [ `grep "const char prefix" src/prefix.cpp | cut -d '"' -f 2` != $(PREFIX) ]; then \

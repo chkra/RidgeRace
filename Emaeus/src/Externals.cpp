@@ -9,6 +9,7 @@
 #include <fstream>
 #include <sstream>
 #include "Externals.h"
+#include "../../include/prefix.h"
 
 int Caller::callR(string scriptPath, vector<string> params) {
 
@@ -20,7 +21,7 @@ int Caller::callR(string scriptPath, vector<string> params) {
 	}
 
 	os << " < " << scriptPath;
-	os << " > tmp  2>&1";
+	os << " > " << RidgeRace::tmpdir << "/tmp" << RidgeRace::uid << ".r.out  2>&1";
 
 	string call = os.str();
 
@@ -31,7 +32,7 @@ int Caller::callR(string scriptPath, vector<string> params) {
 int Caller::removeFile(string path) {
 	std::ostringstream os;
 
-	os << "rm " << path << "2> tmp";
+	os << "rm " << path << "2> " << RidgeRace::tmpdir << "/tmp" << RidgeRace::uid << ".r.out";
 	string call = os.str();
 
 	return system(call.c_str());
@@ -48,7 +49,7 @@ int Caller::makeDir(string path, bool quiet) {
 	os << "mkdir " << path;
 
 	if (quiet)
-		os << " 2> tmp";
+		os << " 2> " << RidgeRace::tmpdir << "/tmp" << RidgeRace::uid << ".r.out";
 
 	string call = os.str();
 
