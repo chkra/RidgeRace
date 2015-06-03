@@ -8,6 +8,7 @@
 #include "Node.h"
 #include "Exception.h"
 #include "StringManipulation.h"
+#include "../../include/prefix.h"
 
 unsigned int Node::curID = 1;
 
@@ -388,7 +389,7 @@ void Node::draw(string path) {
 
 	os << "R --vanilla --quiet ";
 	os << path << " ";
-	os << " < scripts/drawTree.r > tmp  2>&1";
+	os << " < " << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/drawTree.r > tmp  2>&1";
 
 	string call = os.str();
 

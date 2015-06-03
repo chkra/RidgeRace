@@ -19,7 +19,7 @@ void RidgeRacer::print() {
 	ofstream of(_curLogPath.c_str());
 
 	if (!of.good()) {
-		cerr << "\n\nERROR in RidgeRacer::print(): unable to open log file!";
+		cerr << "\n\nERROR in " << RidgeRace::progname << "::print(): unable to open log file!";
 		cerr << "\n\tpath was:\n\t" << _curLogPath << endl;
 		throw Exception("File not found");
 	}
@@ -88,8 +88,10 @@ void RR_Correlater::evaluate() {
 	vector<string> params;
 	params.push_back(_curLogPath);
 
-	cerr << "Running scripts/plotTestRateCorrelationOutput.r\n";
-	C.callR("scripts/plotTestRateCorrelationOutput.r", params);
+	std::stringstream scriptFilename;
+	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/plotTestRateCorrelationOutput.r";
+	cerr << "Running " << scriptFilename.str() << "\n";
+	C.callR(scriptFilename.str(), params);
 }
 
 void RR_Correlater::run() {

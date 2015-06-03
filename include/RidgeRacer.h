@@ -20,6 +20,7 @@
 #include "RR_Tree.h"
 #include "Simulator.h"
 #include "RR_Algorithms.h"
+#include "prefix.h"
 
 using namespace std;
 
@@ -173,7 +174,9 @@ public:
 	void evaluate() {
 		Caller C;
 
-		if (C.fileExists("scripts/plotTestRateCorrelationOutput.r")) {
+		std::stringstream scriptFilename;
+		scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/plotTestRateCorrelationOutput.r";
+		if (C.fileExists(scriptFilename.str())) {
 			cerr << "GOOD:  found the evaluation plotting script\n";
 		}
 

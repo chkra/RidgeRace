@@ -18,11 +18,11 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
 	if (argc != 2) {
-		cerr << "Usage: RidgeRace <path to config file>\n";
+		cerr << "Usage: " << RidgeRace::progname << " <path to config file>\n";
 		cerr << "set testMode accordingly:\n";
 		cerr << "\t0: Correlator\n";
 		cerr
-				<< "\t    Will perform RidgeRace manuscript simulations according to Config\n";
+				<< "\t    Will perform " << RidgeRace::progname << " manuscript simulations according to Config\n";
 		cerr << "\t1: Check\n";
 		cerr << "\t    Will test main functions\n";
 		cerr << "\t2: Performer\n";
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 
 		time(&begin);
 
-		cerr << "\nStarting RidgeRace." << endl;
+		cerr << "\nStarting " << RidgeRace::progname << "." << endl;
 
 		RidgeRaceInput rri = readConfigFile(argv[1]);
 		cerr << "Read configuration  file " << argv[1] << endl;

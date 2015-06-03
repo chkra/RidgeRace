@@ -6,6 +6,7 @@
  */
 
 #include "Result.h"
+#include "prefix.h"
 
 // ############################################################################
 
@@ -107,7 +108,10 @@ void AnnoTree_Result::printTree() {
 	params.push_back(_treePath);
 
 	Caller C;
-	C.callR("scripts/drawTree.r", params);
+
+	std::stringstream scriptFilename;
+	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/drawTree.r";
+	C.callR(scriptFilename.str(), params);
 }
 
 

@@ -7,6 +7,7 @@
 
 #include "RR_Tree.h"
 #include "StringManipulation.h"
+#include "prefix.h"
 
 RR_Tree::RR_Tree() {
 	_simulatorIsSet = false;
@@ -342,7 +343,9 @@ void RR_Tree::setRandom(size_t size, string path) {
 
 	// create the random tree
 	Caller C;
-	C.callR("scripts/createRandomTree.r", params);
+	std::stringstream scriptFilename;
+	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/createRandomTree.r";
+	C.callR(scriptFilename.str(), params);
 
 	cerr << "created a new tree" << endl;
 

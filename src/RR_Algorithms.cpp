@@ -9,6 +9,7 @@
 #include "RidgeSolver.h"
 #include "Node.h"
 #include "RR_Tree.h"
+#include "prefix.h"
 
 #include "StringManipulation.h"
 #include "SetsAndMaps.h"
@@ -239,7 +240,9 @@ Ridge_Result* Ridge_MultiLambda::runOldStyleRidge(RR_Tree &tree) {
 		params.push_back(toString(_headID));
 
 		Caller C;
-		C.callR("scripts/ridge.r", params);
+		std::stringstream scriptFilename;
+		scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/ridge.r";
+		C.callR(scriptFilename.str(), params);
 
 		// read in results of ridge regression
 		// call with ridgeScheme = true
@@ -382,7 +385,9 @@ GLS_Result* GLS_ACR::run(RR_Tree &tree) {
 
 	// call GLS regression
 	Caller C;
-	C.callR("scripts/gls.r", params);
+	std::stringstream scriptFilename;
+	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/gls.r";
+	C.callR(scriptFilename.str(), params);
 
 	//_glsOutputPath = "";
 
@@ -433,7 +438,9 @@ ML_Result* ML_ACR::run(RR_Tree &tree) {
 
 	// call ML reconstruction
 	Caller C;
-	C.callR("scripts/ml.r", params);
+	std::stringstream scriptFilename;
+	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/ml.r";
+	C.callR(scriptFilename.str(), params);
 
 	FloatTreeAnnotation* ml = new FloatTreeAnnotation(_mlOutputPath,
 			tree.getRoot(), "ml");
@@ -479,7 +486,9 @@ Ridge_Result* Ridge_Single::run_oldStyle(RR_Tree &tree) {
 	params.push_back(toString(_headID));
 
 	Caller C;
-	C.callR("scripts/ridge.r", params);
+	std::stringstream scriptFilename;
+	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/ridge.r";
+	C.callR(scriptFilename.str(), params);
 
 	// read in results of ridge regression
 
