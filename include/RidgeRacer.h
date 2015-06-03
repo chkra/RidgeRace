@@ -72,9 +72,8 @@ protected:
 
 		os.str("");
 
-		os << _rri.treeSimFile << '.' << _id;
+		os << RidgeRace::treeDir.str() << "/simulatedTree.newick" << '.' << _id;
 		_rri.treeSimFile = os.str();
-
 	}
 
 	size_t getId() {

@@ -24,7 +24,7 @@ gls <- function(treePath, dataPath, id) {
 	acr <- ace(pheno, phy=tree,  method="GLS", corStruct = corBrownian(1, tree))
 
 	res <- cbind(tree$node.label, acr$ace)
-	path <- paste("trees/tree.newick.", id, ".gls", sep="")
+	path <- paste(treePath, ".gls", sep="")
 
 	write.table(res, path, col.names=FALSE, row.names=FALSE, sep="\t", quote=FALSE)
 }

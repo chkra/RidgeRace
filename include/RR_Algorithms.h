@@ -13,7 +13,7 @@
 #include <cfloat>
 
 #include "Parser.h"
-
+#include "prefix.h"
 #include "Result.h"
 #include "RR_Tree.h"
 
@@ -46,15 +46,15 @@ public:
 	ML_ACR(size_t id) :
 			RR_Algorithm() {
 		ostringstream os;
-		os << "trees/tree.newick" << '.' << id << ".tree";
+		os << RidgeRace::treeDir.str() << "/tree.newick" << '.' << id << ".tree";
 		_mlTreeInputPath = os.str();
 		os.str("");
 
-		os << "trees/tree.newick" << '.' << id << ".dat";
+		os << RidgeRace::treeDir.str() << "/tree.newick" << '.' << id << ".dat";
 		_mlDataInputPath = os.str();
 		os.str("");
 
-		os << "trees/tree.newick." << id << ".ml";
+		os << RidgeRace::treeDir.str() << "/tree.newick" << '.' << id << ".tree.ml";
 		_mlOutputPath = os.str();
 
 		_headID = id;
@@ -87,23 +87,23 @@ public:
 	GLS_ACR(size_t id) :
 			RR_Algorithm() {
 		ostringstream os;
-		os << "trees/tree.newick" << '.' << id << ".tree";
+		os << RidgeRace::treeDir.str() << "/tree.newick" << '.' << id << ".tree";
 		_glsTreeInputPath = os.str();
 		os.str("");
 
-		os << "trees/tree.newick" << '.' << id << ".dat";
+		os << RidgeRace::treeDir.str() << "/tree.newick" << '.' << id << ".dat";
 		_glsDataInputPath = os.str();
 		os.str("");
 
 		os.str("");
 
-		os << "trees/tree.newick." << id << ".gls";
+		os << RidgeRace::treeDir.str() << "/tree.newick." << id << ".tree.gls";
 		_glsOutputPath = os.str();
 
 		_headID = id;
 
 		os.str("");
-		os << "trees/tree.newick." << id << ".gls";
+		os << RidgeRace::treeDir.str() << "/tree.newick." << id << ".tree.gls";
 		_someOtherString = os.str();
 
 		cerr << _someOtherString << endl;
@@ -138,12 +138,12 @@ public:
 	Ridge_MultiLambda(size_t id) :
 			RR_Algorithm() {
 		ostringstream os;
-		os << "trees/tree.ridge.branchStats" << '.' << id;
+		os << RidgeRace::treeDir.str() << "/tree.ridge.branchStats" << '.' << id;
 		_ridgeInputPath = os.str();
 
 		os.str("");
 
-		os << "trees/tree.ridge.dat" << '.' << id;
+		os << RidgeRace::treeDir.str() << "/tree.ridge.dat" << '.' << id;
 		_ridgeOutputPath = os.str();
 
 		_headID = id;
@@ -179,12 +179,12 @@ public:
 	Ridge_Single(size_t id, bool tryToCleanTree, float lambda = 0.001) :
 			RR_Algorithm() {
 		ostringstream os;
-		os << "trees/tree.ridge.branchStats" << '.' << id;
+		os << RidgeRace::treeDir.str() << "/tree.ridge.branchStats" << '.' << id;
 		_ridgeInputPath = os.str();
 
 		os.str("");
 
-		os << "trees/tree.ridge.dat" << '.' << id;
+		os << RidgeRace::treeDir.str() << "/tree.ridge.dat" << '.' << id;
 		_ridgeOutputPath = os.str();
 		_lambda = lambda;
 		_headID = id;
@@ -250,7 +250,7 @@ public:
 	TreePlot(size_t id) :
 			RR_Algorithm() {
 		ostringstream os;
-		os << "trees/evalTree" << '.' << id;
+		os << RidgeRace::treeDir.str() << "/evalTree" << '.' << id;
 		_outPath = os.str();
 
 	}

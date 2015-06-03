@@ -24,7 +24,7 @@ ml <- function(treePath, dataPath, id) {
 	acr <- ace(pheno, phy=tree,  method="REML")
 
 	res <- cbind(tree$node.label, acr$ace)
-	path <- paste("trees/tree.newick.", id, ".ml", sep="")
+	path <- paste(treePath, ".ml", sep="")
 
 	write.table(res, path, col.names=FALSE, row.names=FALSE, sep="\t", quote=FALSE)
 }
