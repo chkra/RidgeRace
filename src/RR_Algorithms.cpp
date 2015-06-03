@@ -391,8 +391,7 @@ GLS_Result* GLS_ACR::run(RR_Tree &tree) {
 
 	//_glsOutputPath = "";
 
-	FloatTreeAnnotation* gls = new FloatTreeAnnotation(this->_someOtherString,
-			tree.getRoot(), "gls", false);
+	FloatTreeAnnotation* gls = new FloatTreeAnnotation(this->_someOtherString, tree.getRoot(), "gls", false);
 
 	tree.addAnnotation("gls", gls);
 
@@ -442,12 +441,10 @@ ML_Result* ML_ACR::run(RR_Tree &tree) {
 	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/ml.r";
 	C.callR(scriptFilename.str(), params);
 
-	FloatTreeAnnotation* ml = new FloatTreeAnnotation(_mlOutputPath,
-			tree.getRoot(), "ml");
+	FloatTreeAnnotation* ml = new FloatTreeAnnotation(_mlOutputPath, tree.getRoot(), "ml");
 	tree.addAnnotation("ml", ml);
 
-	float corr = tree.correlate(Constants::simulationIndex, Constants::mlIndex,
-			false);
+	float corr = tree.correlate(Constants::simulationIndex, Constants::mlIndex,false);
 	float mse = tree.MSE(Constants::simulationIndex, Constants::mlIndex, false);
 	vector<string> s;
 	s.push_back("NA");
