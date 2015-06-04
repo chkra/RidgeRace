@@ -14,6 +14,8 @@
 int Caller::callR(string scriptPath, vector<string> params) {
 
 	std::ostringstream os;
+	std::ostringstream tmpName;
+	tmpName << RidgeRace::progname << "_rcommands";
 
 	os << RidgeRace::Rbin << " --vanilla --quiet ";
 	for (size_t i = 0; i < params.size(); i++) {
@@ -21,7 +23,7 @@ int Caller::callR(string scriptPath, vector<string> params) {
 	}
 
 	os << " < " << scriptPath;
-	os << " > " << RidgeRace::tmpdir << "/tmp" << RidgeRace::uid << ".r.out  2>&1";
+	os << " > " << RidgeRace::tmpdir << "/" << tmpName.str() << RidgeRace::uid << ".out  2>&1";
 
 	string call = os.str();
 
@@ -31,8 +33,10 @@ int Caller::callR(string scriptPath, vector<string> params) {
 
 int Caller::removeFile(string path) {
 	std::ostringstream os;
+	std::ostringstream tmpName;
+	tmpName << RidgeRace::progname << "_rcommands";
 
-	os << "rm " << path << "2> " << RidgeRace::tmpdir << "/tmp" << RidgeRace::uid << ".r.out";
+	os << "rm " << path << "2> " << RidgeRace::tmpdir << "/" << tmpName.str() << RidgeRace::uid << ".out";
 	string call = os.str();
 
 	return system(call.c_str());
@@ -45,11 +49,13 @@ bool Caller::fileExists(string path) {
 
 int Caller::makeDir(string path, bool quiet) {
 	std::ostringstream os;
+	std::ostringstream tmpName;
+	tmpName << RidgeRace::progname << "_rcommands";
 
 	os << "mkdir " << path;
 
 	if (quiet)
-		os << " 2> " << RidgeRace::tmpdir << "/tmp" << RidgeRace::uid << ".r.out";
+		os << " 2> " << RidgeRace::tmpdir << "/" << tmpName.str() << RidgeRace::uid << ".out";
 
 	string call = os.str();
 
