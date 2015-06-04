@@ -342,7 +342,7 @@ void RR_Example::run() {
 	cerr << "Set Regime specifications" << endl;
 
 	// create a random tree;
-	cerr << "Created random tree with" << _rri.startTreeSize << "nodes" << endl;
+	cerr << "Created random tree with " << _rri.startTreeSize << " nodes" << endl;
 
 	// simulate Brownian Motion style evolution
 	_baseTree.setBiasedSimulator(rs);
