@@ -18,7 +18,7 @@
 
 using namespace std;
 
-string TreePlot::_outPath = "trees/evalTree";
+string TreePlot::_outPath = RidgeRace::treeDir.str();
 unsigned int TreePlot::_counter = 0;
 
 // ============================================================================
