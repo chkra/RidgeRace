@@ -13,7 +13,7 @@ ml <- function(treePath, dataPath, id) {
 	tree$node.label <- str_replace_all(tree$node.label, "'", "")
 
 	
-	plot(tree)
+	#plot(tree) Stefan Janssen: why must the tree be plotted into a Rplot.pdf file? It seems to just waste file handle activity
 
 	tVals <- read.table(dataPath)
 	names <- tVals[,1]
