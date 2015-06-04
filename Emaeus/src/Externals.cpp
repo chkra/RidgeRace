@@ -15,7 +15,7 @@ int Caller::callR(string scriptPath, vector<string> params) {
 
 	std::ostringstream os;
 
-	os << "R --vanilla --quiet ";
+	os << RidgeRace::Rbin << " --vanilla --quiet ";
 	for (size_t i = 0; i < params.size(); i++) {
 		os << " " << params.at(i);
 	}
