@@ -39,7 +39,7 @@ protected:
 	size_t _id;
 
 	RidgeRaceInput _rri;
-	static string _basePath;
+	//static string _basePath;
 	static string _outputPath;
 	RR_Tree _baseTree;
 

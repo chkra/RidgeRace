@@ -11,7 +11,7 @@
 
 // ############################################################################
 
-string RidgeRacer::_basePath = "./trees/tree";
+//string RidgeRacer::_basePath = "./trees/tree";
 string RidgeRacer::_outputPath = "log/default";
 
 void RidgeRacer::print() {
