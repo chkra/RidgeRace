@@ -50,6 +50,7 @@ int main(int argc, char* argv[]) {
 		cerr << "\t    Will perform ridge race reconstruction on real data\n";
 		cerr << "\t    Running through lambdas to find good parametrization\n";
 		cerr << "\t    Set inTree and phenoPath in Config!\n";
+		cerr << "\nExample configuration files should be located in:\n  '" << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/ExampleRuns/Configs/'\n";
 		return -1;
 	}
 

@@ -7,6 +7,7 @@ R=R
 
 BUILDDIR=build/
 PROGNAME=RidgeRace
+SED=sed
 
 OBJ_RR= \
 	src/RR_Algorithms.o \
@@ -73,10 +74,14 @@ install:
 	if [ ! -d "$(PREFIX)/bin" ]; then $(INSTALL) -d $(PREFIX)/bin; fi;
 	if [ ! -d "$(PREFIX)/share" ]; then $(INSTALL) -d $(PREFIX)/share; fi;
 	if [ ! -d "$(PREFIX)/share/$(PROGNAME)" ]; then $(INSTALL) -d $(PREFIX)/share/$(PROGNAME); fi;
+	cp -r ExampleRuns $(PREFIX)/share/$(PROGNAME);
+	for cf in `find $(PREFIX)/share/$(PROGNAME) -name "*.conf"`; do $(SED) -i "s|ExampleRuns/|$(PREFIX)/share/$(PROGNAME)/ExampleRuns/|" $$cf; done;
+	for x in `find $(PREFIX)/share/$(PROGNAME) -type d`; do chmod 755 $$x; done;
+	for x in `find $(PREFIX)/share/$(PROGNAME) -type f`; do chmod 644 $$x; done;
 	if [ ! -d "$(PREFIX)/share/$(PROGNAME)/scripts" ]; then $(INSTALL) -d $(PREFIX)/share/$(PROGNAME)/scripts; fi;
 	$(INSTALL) -m 755 build/$(PROGNAME) $(PREFIX)/bin;
 	$(INSTALL) -m 644 scripts/*.r $(PREFIX)/share/$(PROGNAME)/scripts/;
-
+	@echo "\n'$(PROGNAME)' has been successfully installed in $(PREFIX).\nYou find example configuration files to run $(PROGNAME) in '$(PREFIX)/share/$(PROGNAME)/ExampleRuns'.\nHave fun!";
 
 clean:
 	rm -f $(BUILDDIR)*.o
