@@ -46,10 +46,6 @@ bool makePath(const std::string& path)
 #endif
     if (ret == 0)
         return true;
-    if (ret == -1) {
-    	std::cerr << "cannot create directory '" << path.c_str() << "'\n";
-    	exit(1);
-    }
     switch (errno)
     {
     case ENOENT:
@@ -77,7 +73,11 @@ bool makePath(const std::string& path)
         return isDirExist(path);
 
     default:
-        return false;
+    	if (ret == -1) {
+			std::cerr << "cannot create directory '" << path.c_str() << "'\n";
+			exit(1);
+		}
+
     }
 }
 
