@@ -29,7 +29,7 @@ void RidgeRacer::print() {
 		if (equal(_results.at(i)->getType(), "empty")) {
 			continue;
 		}
-		of << _results.at(i)->getType();
+		//of << _results.at(i)->getType(); //Stefan Janssen: why print this info to log, since first col of _results.at(i)->print() seems to hold this info?
 		_results.at(i)->print(of);
 		trueResults++;
 	}
@@ -83,15 +83,18 @@ void RR_Check::run() {
 // ############################################################################
 
 void RR_Correlater::evaluate() {
+	const char plotFilename[] = "performance_pearsCorrelation.pdf";
 
 	Caller C;
 	vector<string> params;
 	params.push_back(_curLogPath);
+	params.push_back(plotFilename);
 
 	std::stringstream scriptFilename;
 	scriptFilename << RidgeRace::prefix << "/share/" << RidgeRace::progname << "/scripts/plotTestRateCorrelationOutput.r";
 	cerr << "Running " << scriptFilename.str() << "\n";
 	C.callR(scriptFilename.str(), params);
+	std::cout << "created plot in file '"<< plotFilename <<"'\n";
 }
 
 void RR_Correlater::run() {
@@ -113,34 +116,43 @@ void RR_Correlater::run() {
 	}
 
 	// iterate over random trees of different sizes
-	for (unsigned int treeSize = _rri.startTreeSize;
-			treeSize <= _rri.stopTreeSize; treeSize += _rri.stepTreeSize) {
+	int nrTreesize = 0;
+	for (unsigned int treeSize = _rri.startTreeSize; treeSize <= _rri.stopTreeSize; treeSize += _rri.stepTreeSize) {nrTreesize++;}
+	int nrTreeRepeats = 0;
+	for (unsigned int treeRepeats = 0; treeRepeats < _rri.repeatTreeSim; treeRepeats++) {nrTreeRepeats++;}
+	int nrDegrees = 0;
+	for (unsigned int treeRepeats = 0; treeRepeats < _rri.repeatTreeSim; treeRepeats++) {nrDegrees++;}
+	int nrRegimes = 0;
+	for (float bstd = _rri.startStd; bstd <= _rri.endStd; bstd += _rri.stepStd) {nrRegimes++;}
+	int nrEvaluation = 0;
+	for (size_t roundsEval = 0; roundsEval < _rri.roundsOfEvolution; roundsEval++) {nrEvaluation++;}
+	int nrSimulation = 0;
+	for (size_t roundsSim = 0; roundsSim < _rri.roundsOfSimulation; roundsSim++) {nrSimulation++;}
+	std::cerr << " starting computation: " << nrTreesize << " tree sizes, " << nrTreeRepeats << " tree repeats, "  << nrDegrees << " degrees, " << nrRegimes << " regimes, " << nrSimulation << " simulations, " << nrEvaluation << " evaluations.\n";
 
-		// make sure that we have steps like 10, 50, 100, 150 ...
+	for (unsigned int treeSize = _rri.startTreeSize; treeSize <= _rri.stopTreeSize; treeSize += _rri.stepTreeSize) {
+				// make sure that we have steps like 10, 50, 100, 150 ...
 		if (treeSize == _rri.startTreeSize + _rri.stepTreeSize) {
 			treeSize -= _rri.startTreeSize;
 		}
 
-		cerr << "   tree size (" << treeSize << "/" << _rri.stopTreeSize
-				<< ")\n";
+		cerr << "   tree size (" << treeSize << "/" << _rri.stopTreeSize << ")\n";
 
 		// create a random tree;
 		_baseTree.setRandom(treeSize, _rri.treeSimFile);
 
 		// use the random tree several times
-		for (unsigned int treeRepeats = 0; treeRepeats < _rri.repeatTreeSim;
-				treeRepeats++) {
+		for (unsigned int treeRepeats = 0; treeRepeats < _rri.repeatTreeSim; treeRepeats++) {
+			std::cerr << "   tree repeat " << treeRepeats << "/" << _rri.repeatTreeSim << "\n";
 
 			// run through different degrees of base std
-			for (float bstd = _rri.startStd; bstd <= _rri.endStd;
-					bstd += _rri.stepStd) {
-
+			for (float bstd = _rri.startStd; bstd <= _rri.endStd; bstd += _rri.stepStd) {
+				std::cerr << "    degrees of base std " << bstd << "/" << _rri.endStd << "\n";
 				rs._baseStd = bstd;
 
 				// run through different numbers of regimes
-				for (size_t i = 1; i <= _rri.maxNrOfRegimes;
-						i += _rri.nrOfRegimesStepSize) {
-
+				for (size_t i = 1; i <= _rri.maxNrOfRegimes; i += _rri.nrOfRegimesStepSize) {
+					std::cerr << "     regime " << i << "/" << _rri.maxNrOfRegimes << "\n";
 					rs._nrOfRegimes = i;
 					testRateCorrelation(rs);
 				}
@@ -184,19 +196,14 @@ void RR_Correlater::testRateCorrelation(RegimeSpecification rs) {
 	time_t begin, end;
 
 	// redefine regime setup
-	for (size_t roundsSim = 0; roundsSim < _rri.roundsOfSimulation;
-			roundsSim++) {
-
-		cerr << "       sim round " << (roundsSim + 1) << '/'
-				<< _rri.roundsOfSimulation << endl;
+	for (size_t roundsSim = 0; roundsSim < _rri.roundsOfSimulation; roundsSim++) {
+		cerr << "       sim round " << (roundsSim + 1) << '/' << _rri.roundsOfSimulation << endl;
 		// set new regimes according to rs
 		_baseTree.setSimulator(rs);
 
-		for (size_t roundsEval = 0; roundsEval < _rri.roundsOfEvolution;
-				roundsEval++) {
+		for (size_t roundsEval = 0; roundsEval < _rri.roundsOfEvolution; roundsEval++) {
 
-			cerr << "        eval round " << (roundsEval + 1) << '/'
-					<< _rri.roundsOfEvolution << endl;
+			cerr << "        eval round " << (roundsEval + 1) << '/' << _rri.roundsOfEvolution << endl;
 
 			// create phenotypes, store in simulation index
 			_baseTree.simulateBM();
