@@ -1,0 +1,57 @@
+
+Starting RidgeRace.
+Read configuration  file /home/sjanssen/share/RidgeRace/ExampleRuns/Configs/exampleInference.conf
+ID of this instance of RR is 1781
+
+WARNING: calling RR_LambdaSearch::clear
+Running ... 
+ starting Sankoff algorithm
+i16	_A_0;0;0;1_B_2;2;2;1
+TCGA-02-0007	_A_3.40282e+38;0;0;3.40282e+38_B_0;3.40282e+38;3.40282e+38;0
+i12	_A_2;0;0;3_B_2;2;2;2
+TCGA-02-0003	_A_0;0;0;3.40282e+38_B_3.40282e+38;3.40282e+38;3.40282e+38;0
+TCGA-02-0004	_A_0;0;0;3.40282e+38_B_3.40282e+38;3.40282e+38;3.40282e+38;0
+i15	_A_1;0;0;1_B_1;2;2;2
+i18	_A_0;0;0;0_B_2;2;2;2
+TCGA-02-0001	_A_3.40282e+38;0;0;0_B_0;3.40282e+38;3.40282e+38;3.40282e+38
+i13	_A_2;0;0;2_B_1;2;2;2
+TCGA-02-0006	_A_0;0;0;0_B_3.40282e+38;3.40282e+38;3.40282e+38;3.40282e+38
+TCGA-02-0009	_A_0;0;0;0_B_3.40282e+38;3.40282e+38;3.40282e+38;3.40282e+38
+13AAAB
+14BAAB
+15AAAB
+16AAAB
+17AAAB
+18AAAA
+19AAAA
+20AAAA
+21BAAA
+22AAAB
+ finished Sankoff
+ starting Ridge_Single algorithm
+ finished Ridge_Single
+opening _rri.posNamePath 
+
+
+================= tree ======================
+
+
+
+================= branch-wise map ======================
+
+nodeID	mutations	trueValue	inferredValue	inferredWeight	label
+14	A1B,	4	18.6979	0.484375	TCGA-02-0007
+18	B4A,	NA	451.324	33.75	i18
+21	A1B,B4A,	13	15.3716	-7.28125	TCGA-02-0001
+
+
+================= position weight map ======================
+
+pos	name	mean	std	min	max	total
+--------------------------------------------
+Finished RR_Inference, clearing base tree
+
+
+-----------------------------------
+All is well.
+Time elapsed: 0 minutes
