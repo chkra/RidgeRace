@@ -40,7 +40,7 @@ OBJ_Emaeus= \
 	Emaeus/src/StringManipulation.o \
 	Emaeus/src/System.o \
 
-all: checkDependencies createBuildDir writeSettings $(OBJ_RR) $(OBJ_Emaeus)
+all: writeSettings checkDependencies createBuildDir $(OBJ_RR) $(OBJ_Emaeus)
 	$(CXX) -o "$(BUILDDIR)$(PROGNAME)" $(patsubst src/%, build/%, $(OBJ_RR)) $(patsubst Emaeus/src/%, build/%, $(OBJ_Emaeus)) 
 	
 createBuildDir: 
@@ -91,3 +91,4 @@ distclean: clean
 	rm -f $(BUILDDIR)$(PROGNAME)
 	rm -f $(PROGNAME)
 	rm -rf $(BUILDDIR)
+	rm -f src/prefix.cpp
