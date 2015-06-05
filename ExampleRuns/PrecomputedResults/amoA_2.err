@@ -1,0 +1,16 @@
+
+Starting RidgeRace.
+directory '/homes/sjanssen/share/RidgeRace/ExampleRuns/log' has been created in order to write log file
+Read configuration  file ../Configs/amoA_2.conf
+ID of this instance of RR is 2880
+
+ correlation: 0.720307
+Finished RR_Performer.
+Wrote 2 results to /homes/sjanssen/share/RidgeRace/ExampleRuns/log/amoA_2.conf_2880_2015-6-5-10:8.log
+--------------------------------------------
+Finished RR_Performer, clearing base tree
+
+
+-----------------------------------
+All is well.
+Time elapsed: 295.75 minutes
