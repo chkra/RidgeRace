@@ -81,7 +81,10 @@ install:
 	if [ ! -d "$(PREFIX)/share/$(PROGNAME)/scripts" ]; then $(INSTALL) -d $(PREFIX)/share/$(PROGNAME)/scripts; fi;
 	$(INSTALL) -m 755 build/$(PROGNAME) $(PREFIX)/bin;
 	$(INSTALL) -m 644 scripts/*.r $(PREFIX)/share/$(PROGNAME)/scripts/;
-	@echo "\n'$(PROGNAME)' has been successfully installed in $(PREFIX).\nYou find example configuration files to run $(PROGNAME) in '$(PREFIX)/share/$(PROGNAME)/ExampleRuns'.\nHave fun!";
+	@echo "";
+	@echo "'$(PROGNAME)' has been successfully installed in $(PREFIX).";
+	@echo "You find example configuration files to run $(PROGNAME) in '$(PREFIX)/share/$(PROGNAME)/ExampleRuns'.";
+	@echo "Have fun!";
 
 clean:
 	rm -f $(BUILDDIR)*.o
