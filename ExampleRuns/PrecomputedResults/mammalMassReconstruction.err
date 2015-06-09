@@ -1,0 +1,15 @@
+
+Starting RidgeRace.
+Read configuration  file ../Configs/mammalMassReconstruction.conf
+ID of this instance of RR is 2983
+
+ correlation: 0.993411
+Finished RR_Performer.
+Wrote 2 results to /homes/sjanssen/share/RidgeRace/ExampleRuns/log/mammalMassReconstruction.conf_2983_2015-6-5-10:9.log
+--------------------------------------------
+Finished RR_Performer, clearing base tree
+
+
+-----------------------------------
+All is well.
+Time elapsed: 4444.25 minutes
