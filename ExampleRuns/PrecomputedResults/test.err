@@ -1,0 +1,15 @@
+
+Starting RidgeRace.
+Read configuration  file ExampleRuns/Configs/test.conf
+ID of this instance of RR is 4423
+
+ correlation: 0.996758
+Finished RR_Performer.
+Wrote 2 results to ExampleRuns/log/test.conf_4423_2015-6-9-9:0.log
+--------------------------------------------
+Finished RR_Performer, clearing base tree
+
+
+-----------------------------------
+All is well.
+Time elapsed: 0 minutes

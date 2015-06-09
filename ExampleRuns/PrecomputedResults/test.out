@@ -1,0 +1,9 @@
+original tree with lambda = 0.01
+#NEXUS
+begin trees;
+tree 'T' = (('TCGA-02-0007'[&ridge=-8.09,ridgeWeight=-1.83,simulation=4.0]:12.492,(('TCGA-02-0003'[&ridge=-2.97,ridgeWeight=-21.15,simulation=1.0]:7.577,('TCGA-02-0006'[&ridge=500.5,ridgeWeight=-1262.91,simulation=500.0]:6.916,'TCGA-02-0009'[&ridge=652.19,ridgeWeight=-1179.09,simulation=600.0]:7.279)'i7'[&ridge=9234.81,ridgeWeight=1080.92,]:8.398)'i5'[&ridge=157.26,ridgeWeight=10.19,]:9.183,'TCGA-02-0001'[&ridge=-47.57,ridgeWeight=-14.9,simulation=13.0]:7.468)'i4'[&ridge=63.7,ridgeWeight=3.16,]:15.485)'i2'[&ridge=14.77,ridgeWeight=0.76,]:32.709,'TCGA-02-0004'[&ridge=1.97,ridgeWeight=0.36,simulation=2.0]:32.709)'i1'[&ridge=-9.95,ridgeWeight=-9.95,]:1;;
+end;weight tree with lambda = 0.1
+#NEXUS
+begin trees;
+tree 'T' = (('TCGA-02-0007'[&ridge=3.87,ridgeWeight=-1.82,simulation=4.0]:12.492,(('TCGA-02-0003'[&ridge=1.25,ridgeWeight=-21.57,simulation=1.0]:7.577,('TCGA-02-0006'[&ridge=499.76,ridgeWeight=7.95,simulation=500.0]:6.916,'TCGA-02-0009'[&ridge=599.54,ridgeWeight=21.27,simulation=600.0]:7.279)'i7'[&ridge=444.74,ridgeWeight=33.34,]:8.398)'i5'[&ridge=164.71,ridgeWeight=10.56,]:9.183,'TCGA-02-0001'[&ridge=13.35,ridgeWeight=-7.28,simulation=13.0]:7.468)'i4'[&ridge=67.7,ridgeWeight=2.65,]:15.485)'i2'[&ridge=26.64,ridgeWeight=0.82,]:32.709,'TCGA-02-0004'[&ridge=2.0,ridgeWeight=0.06,simulation=2.0]:32.709)'i1'[&ridge=-0.03,ridgeWeight=-0.03,]:1;;
+end;
