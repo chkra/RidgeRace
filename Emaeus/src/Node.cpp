@@ -20,6 +20,25 @@ double round_nplaces(double value, int to) {
 	return round(value * places) / places;
 }
 
+set<std::string> Node::getTipNames() {
+	set<std::string> taxa;
+
+	if (this->children.size() == 0) {
+		//I am a leaf, i.e. tip, i.e. taxon of the tree
+		taxa.insert(this->info);
+	} else {
+		//I am an inner node
+		for (size_t i = 0; i < this->children.size(); i++) {
+			set<std::string> childTaxa = this->children[i]->getTipNames();
+			for (set<std::string>::iterator it = childTaxa.begin(); it != childTaxa.end(); it++) {
+				taxa.insert(*it);
+			}
+		}
+	}
+
+	return taxa;
+}
+
 void Node::printNewick(std::ostream &target, bool quotes) {
 
 	size_t L = this->children.size();

@@ -49,6 +49,7 @@ private:
 public:
 	set<IdType> getSetOfAllIdsBelow();
 	set<IdType> getSetOfAllIdsBelow(int minHeight);
+	set<std::string> getTipNames(); // a function to traverse the tree and push all node names in a set, which are leaves, i.e. have no further children
 
 	static IdType curID; ///< a counter to provide unique ids
 	float dist;
