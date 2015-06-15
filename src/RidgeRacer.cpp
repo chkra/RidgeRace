@@ -8,7 +8,7 @@
 #include "RidgeRacer.h"
 #include "RR_TreeAnnotation.h"
 #include "StringManipulation.h"
-
+#include <iostream>
 // ############################################################################
 
 //string RidgeRacer::_basePath = "./trees/tree";
@@ -287,27 +287,34 @@ void RR_Performer::run() {
 	Ridge_Result* r = rSingle->run(_baseTree);
 	_results.push_back(r);
 
-	cout << "original tree with lambda = " << lambda << endl;
+	//cout << "original tree with lambda = " << lambda << endl;
 
 	cout << "#NEXUS\n";
-	cout << "begin trees;\n";
-	cout << "tree 'T' = ";
+	cout << "begin taxa;" << std::endl;
+	set<std::string> allTips = _baseTree.getRoot()->getTipNames();
+	cout << "\tdimensions ntax=" << allTips.size() << ";" << std::endl;
+	cout << "\ttaxlabels" << std::endl;
+	for (std::set<std::string>::iterator it = allTips.begin(); it != allTips.end(); it++) {
+		cout << "\t'" << (*it) << "'" << std::endl;
+	}
+	cout << ";" << std::endl;
+	cout << "end;" << std::endl;
+
+	cout << "begin trees;" << std::endl;
+	cout << "\ttree 'original tree with lambda = " << lambda << "' = ";
 	_baseTree.print(Newick, -1, std::cout);
-	cout << ";\n";
-	cout << "end;";
+	cout << std::endl;
 
 	rSingle->setLambda(lambda * 10.0f);
 	r = rSingle->run(_baseTree);
 	_results.push_back(r);
 
-	cout << "weight tree with lambda = " << (10.0f * lambda) << endl;
+	//cout << "weight tree with lambda = " << (10.0f * lambda) << endl;
 
-	cout << "#NEXUS\n";
-	cout << "begin trees;\n";
-	cout << "tree 'T' = ";
+	cout << "\ttree 'weight tree with lambda = " << (10.0f * lambda) << "' = ";
 	_baseTree.print(Newick, -1, std::cout);
-	cout << ";\n";
-	cout << "end;";
+	cout << std::endl;
+	cout << "end;" << std::endl;
 
 	// @ todo reactivate this nice feature as soon as Ridge_Single has
 	// its lambda search internalized
