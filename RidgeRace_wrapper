@@ -1,0 +1,375 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Data::Dumper;
+use Getopt::Long;
+
+my $MODE_performer = 'performer';
+my $PROGRAMNAME = 'RidgeRace';
+my %BINARIES = (
+	'gcc','gcc',
+);
+our %REFERENCES = ();
+$REFERENCES{'kra:mch:2014'} = {
+	authors => "Christina Kratsch, Alice Carolyn McHardy.",
+	title => "RidgeRace: ridge regression for continuous ancestral character estimation on phylogenetic trees.",
+	journal => "BMC Bioinformatics 2014.",
+	doi => "10.1093/bioinformatics/btu477"};
+our @ORDER = ('kra:mch:2014');
+
+my %PARAM;
+$PARAM{tree} = {modes => [$MODE_performer], key => 'tree', type => 's', default => undef, info => "The name of a file containing one Newick formated phylogenetic tree, i.e. the tree topology together with branch lengths."};
+$PARAM{phenotypes} = {modes => [$MODE_performer], key => 'phenotypes', type => 's', default => undef, info => "The name of a file containing the phenotype descriptions of the leaf nodes. The file must have two tabulator separated columns. The first holds the name of the leaf node, the second column holds the numeric value of the phenotype. Each leaf node in the phylogeny (given as the file name of parameter --@(tree), must form one row in the file."};
+$PARAM{binaryname} = {modes => [$MODE_performer], key => 'binaryname', type => 's', default => $PROGRAMNAME, info => "The path to the C++ compiled binary of $PROGRAMNAME. By default it should be found in your PATH environment."};
+$PARAM{help} = {modes => [$MODE_performer], key => 'help', default => undef, info => "show this brief help on version and usage"};
+$PARAM{logfile} = {modes => [$MODE_performer], key => 'logfile', default => execute(getBinary('mktemp')), info => "write logging information into the given file."};
+$PARAM{verbose} = {modes => [$MODE_performer], key => 'verbose', default => 0, type => 'i', info => "Prints some additional information about the computing process."};
+
+my $settings = {};
+foreach my $param (keys %PARAM) {
+	$settings->{$param} = $PARAM{$param}->{default};
+}
+my %help = ();
+foreach my $param (keys %PARAM) {
+	my $optionSec = $PARAM{$param}->{key};
+	$optionSec .= "=".$PARAM{$param}->{type} if (exists $PARAM{$param}->{type});
+	$help{$optionSec} = \$settings->{$param};
+}
+&GetOptions( 	
+	%help
+);
+
+usage() if (defined $settings->{'help'}); #user asks for help --> print usage and die
+
+checkParameters($settings, \%PARAM);
+my $configFileName = writeInputToTempfile(createConfigFile($settings));
+my $command = absFilename($settings->{binaryname})." ".$configFileName;
+print "Actual call was: $command\n" if ($settings->{verbose});
+my $result = execute("$command 2>&1");
+print $result;
+
+#clean up
+execute(getBinary('rm')." -f ".$settings->{logfile}) if (!$settings->{verbose});
+execute(getBinary('rm')." -f $configFileName") if (!$settings->{verbose});
+
+sub createConfigFile {
+	my ($settings) = @_;
+	
+	my %configs = (
+		'run', {
+			'TESTMODE' => 2,
+		},
+		'input', {
+			'inTree' => undef,
+			'startTreeSize' => 30,
+			'stopTreeSize' => 500,
+			'stepTreeSize' => 100,
+			'treeSimFile' => 'setToBeInTMPDIR',
+			'repeatTreeSim' => 1,
+		},
+		'simulation', {
+			'grandMean' => 0,
+			'maxNrOfRegimes' => 8,
+			'nrOfRegimesStepSize' => 1,
+			'stdMode' => 'drawStd',
+			'startStd' => 0.5,
+			'endStd' => 5.0,
+			'stepStd' => 0.5,
+		},
+		'evaluation', {
+			'roundsOfSimulation' => 3,
+			'roundsOfEvolution' => 10,
+			'testCorrelationOutputFile' => undef,
+			'drawTrees' => 1,
+		},
+		'inference', {
+			'phenoPath' => undef,
+			'sequencePath' => 'notNeeded',
+			'distanceMatrixPath' => 'notNeeded',
+			'posNamePath' => 'notNeeded',
+		},
+	);
+
+	$configs{'input'}->{'inTree'} = absFilename($settings->{tree});
+	$configs{'inference'}->{'phenoPath'} = absFilename($settings->{phenotypes});
+	$configs{'evaluation'}->{'testCorrelationOutputFile'} = absFilename($settings->{logfile});
+
+	my $cont = "";
+	foreach my $category ('run','input','simulation','evaluation','inference')	{
+		$cont .= "[".$category."]\n";
+		foreach my $key (keys(%{$configs{$category}})) {
+			$cont .= $key." = ".$configs{$category}->{$key}."\n";
+		}
+		$cont .= "\n";
+	}
+	
+	return $cont;
+}
+
+sub checkParameters {
+	my ($settings, $refHash_params) = @_;
+	
+	my $diePrefix = "wrong command line parameter:\n  ";
+	die $diePrefix."--".$PARAM{'tree'}->{key}.": missing a file with a phylogenetic tree in newick format.\n" if (not defined $settings->{'tree'});
+	die $diePrefix."--".$PARAM{'phenotypes'}->{key}.": missing a two column file with phenotypic values.\n" if (not defined $settings->{'phenotypes'});
+	die $diePrefix."--".$PARAM{'tree'}->{key}.": cannot read the file you provided.\n" if (not -r $settings->{'tree'});
+	die $diePrefix."--".$PARAM{'phenotypes'}->{key}.": cannot read the file you provided.\n" if (not -r $settings->{'phenotypes'});
+	die $diePrefix."--".$PARAM{'binaryname'}->{key}.": cannot execute $PROGRAMNAME binary.\n" if ((defined $settings->{'binaryname'}) && (not -x $settings->{'binaryname'}));
+	chomp $settings->{'logfile'};
+	die $diePrefix."--".$PARAM{'logfile'}->{key}.": cannot write to the file you provided for logging.\n" if (not -w $settings->{'logfile'});
+}
+
+sub usage {
+	my ($settings) = @_;
+
+my $HELP = <<EOF;
+# $PROGRAMNAME: ridge regression for continuous ancestral character 
+#            estimation on phylogenetic trees.
+#            version 1.0 (29.07.2015)
+#            Stefan Janssen (stefan.janssen\@helmholtz-hzi.de)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+USAGE: 
+perl ${PROGRAMNAME}_wrapper --$PARAM{tree}->{key} <your newick tree file> --$PARAM{phenotypes}->{key} <your phenotype table file>
+
+EOF
+;
+
+	my @paramGroups = ();
+	push @paramGroups, {name => 'OPTIONS', elements => ['tree','phenotypes','binaryname','logfile','verbose']};
+	foreach my $refHash_group (@paramGroups) {
+		$HELP .= $refHash_group->{name}.":\n";
+		for my $par (@{$refHash_group->{elements}}) {
+			$HELP .= printParamUsage($PARAM{$par}, \%PARAM, [$MODE_performer])."\n";
+		}
+	}
+
+	#~ $HELP .= "REFERENCES:\n";
+	#~ foreach my $refID ('kra:mch:2014') {
+		#~ $HELP .= printReference($refID);
+	#~ }
+	$HELP .= "CITATION:\n    If you use this program in your work you might want to cite:\n\n";
+	foreach my $refID ('kra:mch:2014') {
+		$HELP .= printReference($refID);
+	}
+
+	print $HELP;
+	exit(0);
+}
+
+sub printParamUsage {
+	my ($parameter, $refHash_params, $refList_allmodes) = @_;
+	
+	die "printParamUsage: parameter hash not defined!\n" if (not defined $refHash_params);
+	
+	my $indent = 2;
+	my $title = (" " x $indent)."--".$parameter->{key};
+	$title .= " <".usage_type2name($parameter).">" if (defined usage_type2name($parameter));
+	$title .= " : ";
+	
+	my $text = "missing description.";
+	$text = usage_convertInfoText($parameter->{info}, $refHash_params, $parameter->{default}) if ((defined $parameter->{info}) && ($parameter->{info} ne ''));
+	
+	if (@{$parameter->{modes}} < @{$refList_allmodes}) {
+		$text .= "\nOnly available in mode".(@{$parameter->{modes}} == 1 ? '' : 's').": \"".join('", "', @{$parameter->{modes}})."\".";
+	}
+	return printIdent($title, $text);	
+}
+
+sub usage_type2name {
+	my ($parameter) = @_;
+	
+	if (defined $parameter->{infoType}) {
+		return $parameter->{infoType};
+	} else {
+		if (defined $parameter->{type}) {
+			if ($parameter->{type} eq 's') {
+				return 'string';
+			} elsif ($parameter->{type} eq 'i') {
+				return 'int';
+			} elsif ($parameter->{type} eq 'f') {
+				return 'float';
+			} else {
+				return $parameter->{type};
+			}
+		} else {
+			return undef;
+		}
+	}
+}
+
+sub usage_convertInfoText {
+	my ($text, $refHash_params, $default) = @_;
+	
+	die "usage_convertInfoText: parameter hash not defined!\n" if (not defined $refHash_params);
+
+	while ($text =~ m/\@\((.+?)\)/) {
+		my $key = $1;
+		if (defined $refHash_params->{$key}->{key}) {
+			my $value = $refHash_params->{$key}->{key};
+			$text =~ s/\@\($key\)/$value/;
+		} elsif ($key eq 'DEFAULT') {
+			$text =~ s/\@\($key\)/$default/;
+		} elsif (exists $REFERENCES{$key}) {
+			my $refNum = getNumber($key);
+			$text =~ s/\@\($key\)/$refNum/;
+		}
+	}
+	
+	return $text;
+}
+
+sub getNumber {
+	my ($refID) = @_;
+	
+	foreach my $refID (keys(%REFERENCES)) {
+		if (not exists $REFERENCES{$refID}) {
+			die "There is no reference with key '$refID'!\n";
+		}
+	}
+	
+	for (my $num = 0; $num < @ORDER; $num++) {
+		if ($ORDER[$num] eq $refID) {
+			return $num+1;
+		}
+	}
+	
+	print STDERR "reference '$refID' is not added to ORDER array!\n";
+	return -1;
+}
+
+sub printReference {
+	my ($refID) = @_;
+	my $text = "";
+	$text .= $REFERENCES{$refID}->{authors}."\n";
+	$text .= "\"".$REFERENCES{$refID}->{title}."\"\n";
+	$text .= $REFERENCES{$refID}->{journal}." ";
+	$text .= "doi:".$REFERENCES{$refID}->{doi};
+	$text .= " ".$REFERENCES{$refID}->{www} if (exists $REFERENCES{$refID}->{www});
+	return printIdent("[".getNumber($refID)."] ", $text)."\n";
+}
+sub printIdent {
+	my ($title, $text) = @_;
+
+	my $OUT = $title;
+	my @infoLines = @{usage_textlines($text, 80 - length($title))};
+	$OUT .= (shift @infoLines)."\n";
+	foreach my $line (@infoLines) {
+		$OUT .= (" " x length($title)).$line."\n";
+	}
+
+	return $OUT;
+}
+sub usage_textlines {
+	my ($text, $length) = @_;
+	
+	$text =~ s/\n/ @\(N\) /g;
+	my @words = split(m/\s+/, $text);
+
+	my @lines = ();
+	my $currentLine = $words[0];
+	for (my $i = 1; $i < @words; $i++) {
+		if ($words[$i] eq '@(N)') {
+			push @lines, $currentLine;
+			while (($i < @words) && ($words[$i+1] eq '@(N)')) {
+				push @lines, "";
+				$i++;
+			}
+			$currentLine = $words[$i+1] if ($i < @words);
+			$i++;
+		} else {
+			if (length($currentLine." ".$words[$i]) < $length) {
+				$currentLine .= " ".$words[$i];
+			} else {
+				push @lines, $currentLine;
+				$currentLine = $words[$i];
+			}
+		}
+	}
+	push @lines, $currentLine;
+	
+	return \@lines;
+}
+sub absFilename {
+	my ($filename) = @_;
+	
+	my $afn = execute(getBinary('readlink')." -m $filename");
+	chomp $afn;
+	
+	return $afn;
+}
+
+my %checkedBinaries = (); #run time hash to avoid multiple check for binaries
+sub getBinary {
+	my ($requestedBinary) = @_;
+	
+	return $checkedBinaries{$requestedBinary} if (exists $checkedBinaries{$requestedBinary});
+	
+	my $binary = $requestedBinary;
+	$binary = $BINARIES{$requestedBinary} if (exists $BINARIES{$requestedBinary});
+	my $whichResult = qx(which $binary 2>&1);
+	chomp $whichResult;
+	if (($whichResult ne '') && (-x $whichResult)) {
+		$binary = $whichResult;
+	} else {
+		$binary = undef;
+	}
+	if (not defined $binary) {
+		die "You are using the binary '$requestedBinary', but it cannot be found. Please check your configuration and/or your PATH variable.";
+	} else {
+		$checkedBinaries{$requestedBinary} = $binary;
+		return $binary;
+	}
+}
+sub execute {
+	my ($command) = @_;
+
+	my $mergeSTD = 'false';
+	if ($command =~ m/2>&1/) {
+		$command =~ s/2>&1//g;
+		$mergeSTD = 'true';
+	}
+	
+	my $mktmp_binary = getBinary('mktemp');
+	my $rm_binary = getBinary('rm');
+	my $tmpStderr = qx($mktmp_binary);
+	my $stdout = qx($command 2>$tmpStderr);
+	my $exitCode = $? >> 8;
+	my @stderrlines = ();
+	open (IN, $tmpStderr) || die "can't open temporary stderr file: $!";
+		@stderrlines =<IN>;
+	close (IN);
+	qx($rm_binary -f $tmpStderr);
+	
+	$exitCode = 0 if (($command =~ m/\s*diff\s+/) && ($exitCode == 1)); #because diff gives an exit code of 1 if there are differences
+	$exitCode = 0 if (($command =~ m/\s*baliscore\s+/)); #because baliscore exit code is strange
+	if ($exitCode != 0) {
+		print STDERR "Shell execution of `$command` failed with exit code $exitCode, called by\n";
+		my $j = 0;
+		while (defined caller($j)) {
+			print STDERR "\tfunction '".(caller($j))[3]."' in file '".(caller($j))[1]."', at line ".(caller($j))[2]."\n";
+			$j++;
+		}
+		print STDERR "Error message is:\n"."\t".join("\t", @stderrlines);
+		exit $exitCode;
+	} else {
+		if ($mergeSTD eq 'true') {
+			return $stdout.join("",@stderrlines);
+		} else {
+			return $stdout;
+		}
+	}
+}
+sub writeInputToTempfile {
+	my ($input) = @_;
+	
+	my $tmpInputFilename = execute(getBinary('mktemp')); 
+	chomp $tmpInputFilename;
+	die "could not create temporary file for input sequence: $!\n"  if ($? != 0);
+	open (FILE, "> ".$tmpInputFilename) || die "could not write to temporary file '$tmpInputFilename' to store input: $!";
+		print FILE $input;
+	close (FILE);
+
+	return $tmpInputFilename;
+}
