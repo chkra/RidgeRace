@@ -236,11 +236,18 @@ void TreeExtractor::getLeafFeatureData(RR_Node* curNode,
 
 		if (!pheno->hasElement(curNode)) {
 			Exception e;
-			e << "ERROR in TreeExtractor::getLeafFeatureData: child node without annotation!\n";
-			e << " child name was ";
+			e << "ERROR:\n";
+			e << "  You did provide two file to RidgeRace, one contains the phylogenetic tree, the other phenotypic values for the leaf nodes.\n";
+			e << "  However, for the leaf node '";
 			e << curNode->info;
-			e << " child id was ";
-			e << curNode->id;
+			e << "' no phenotypic value is provided in the according file.\n";
+			e << "  Please check the spelling of the leaf node in both files.\n";
+			e << "  Maybe you have to add a new line to the phenotype value input file for this leaf node.\n";
+//			e << "ERROR in TreeExtractor::getLeafFeatureData: child node without annotation!\n";
+//			e << " child name was '";
+//			e << curNode->info;
+//			e << "' child id was ";
+//			e << curNode->id;
 			throw e;
 		}
 
