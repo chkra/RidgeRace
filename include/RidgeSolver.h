@@ -98,19 +98,19 @@ class RidgeRegression {
 
 public:
 
-	boost::numeric::ublas::matrix<float> _X;
-	boost::numeric::ublas::matrix<float> _Xt;
-	uvector _Y;
-	float _lambda;
+	boost::numeric::ublas::matrix<float> rrX;
+	boost::numeric::ublas::matrix<float> rrXt;
+	uvector rrY;
+	float rrlambda;
 
 	RidgeRegression(boost::numeric::ublas::matrix<float> X, uvector Y, float lambda=0.0001);
 
 	RidgeRegressionResult solve();
 
 	~RidgeRegression() {
-		_X.resize(0,0,false);
-		_Xt.resize(0,0,false);
-		_Y.resize(0, false);
+		rrX.resize(0,0,false);
+		rrXt.resize(0,0,false);
+		rrY.resize(0, false);
 	}
 
 };

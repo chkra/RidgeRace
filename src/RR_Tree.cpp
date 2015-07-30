@@ -10,37 +10,37 @@
 #include "prefix.h"
 
 RR_Tree::RR_Tree() {
-	_simulatorIsSet = false;
-	_root = 0;
-	_size = 0;
+	rrsimulatorIsSet = false;
+	rrroot = 0;
+	rrsize = 0;
 }
 
 RR_Tree::RR_Tree(RR_Node* root) {
-	_simulatorIsSet = false;
-	_root = root;
-	_size = root->getSetOfAllIdsBelow().size() + 1;
+	rrsimulatorIsSet = false;
+	rrroot = root;
+	rrsize = root->getSetOfAllIdsBelow().size() + 1;
 }
 
 RR_Tree::RR_Tree(string path) {
-	_simulatorIsSet = false;
+	rrsimulatorIsSet = false;
 	NewickParser nwp(path);
-	_root = (RR_Node*) nwp.getTree();
-	_size = _root->getSetOfAllIdsBelow().size() + 1;
+	rrroot = (RR_Node*) nwp.getTree();
+	rrsize = rrroot->getSetOfAllIdsBelow().size() + 1;
 }
 
 void RR_Tree::printSelector(TreePrintMode tpm, vector<string> relAnnotations,
 		int minSupport, ostream &target) {
 	switch (tpm) {
 	case Newick:
-		printNewick(_root, relAnnotations, minSupport, target);
+		printNewick(rrroot, relAnnotations, minSupport, target);
 		target << ';';
 		break;
 	case SimpleNewick:
-		printSimpleNewick(_root, target);
+		printSimpleNewick(rrroot, target);
 		target << ';';
 		break;
 	default:
-		printNewick(_root, relAnnotations, minSupport, target);
+		printNewick(rrroot, relAnnotations, minSupport, target);
 		break;
 
 	}
@@ -49,7 +49,7 @@ void RR_Tree::printSelector(TreePrintMode tpm, vector<string> relAnnotations,
 void RR_Tree::print(TreePrintMode tpm, int minSupport, ostream &target) {
 	vector<string> relAnnotations;
 	map<string, TreeAnnotation*>::iterator iter;
-	for (iter = _annotations.begin(); iter != _annotations.end(); iter++) {
+	for (iter = rrannotations.begin(); iter != rrannotations.end(); iter++) {
 		if (equal(iter->first, "sankoff")) {
 			continue;
 		}
@@ -219,15 +219,15 @@ void RR_Tree::setSummary(RidgeRaceIndex rri, string value) {
 	float f;
 	sstr << value;
 	sstr >> f;
-	_summary[rri] = f;
+	rrsummary[rri] = f;
 }
 
 bool RR_Tree::hasInterestingSummary() {
 
-	if (!contains(_summary, Constants::glsIndex)
-			|| !contains(_summary, Constants::mlIndex)
-			|| !contains(_summary, Constants::ridgeIndex)) {
-		if (contains(_summary, Constants::ridgeIndex)) {
+	if (!contains(rrsummary, Constants::glsIndex)
+			|| !contains(rrsummary, Constants::mlIndex)
+			|| !contains(rrsummary, Constants::ridgeIndex)) {
+		if (contains(rrsummary, Constants::ridgeIndex)) {
 			return true;
 
 		} else {
@@ -235,14 +235,14 @@ bool RR_Tree::hasInterestingSummary() {
 					"ERROR in RR_Tree::hasInterestingSummary: did not find all required indizes\n");
 		}
 	} else {
-		return _summary[Constants::ridgeIndex]
-				< 0.75 * _summary[Constants::mlIndex]
-				|| _summary[Constants::ridgeIndex]
-						< 0.75 * _summary[Constants::glsIndex]
-				|| (0.75 * _summary[Constants::ridgeIndex]
-						> _summary[Constants::mlIndex]
-						&& 0.75 * _summary[Constants::ridgeIndex]
-								> _summary[Constants::glsIndex]);
+		return rrsummary[Constants::ridgeIndex]
+				< 0.75 * rrsummary[Constants::mlIndex]
+				|| rrsummary[Constants::ridgeIndex]
+						< 0.75 * rrsummary[Constants::glsIndex]
+				|| (0.75 * rrsummary[Constants::ridgeIndex]
+						> rrsummary[Constants::mlIndex]
+						&& 0.75 * rrsummary[Constants::ridgeIndex]
+								> rrsummary[Constants::glsIndex]);
 	}
 
 }
@@ -250,17 +250,17 @@ bool RR_Tree::hasInterestingSummary() {
 float RR_Tree::correlate(string firstIndex, string secondIndex,
 		bool includeLeafs) {
 
-	if (!contains(_annotations, firstIndex)
-			|| !contains(_annotations, firstIndex)) {
+	if (!contains(rrannotations, firstIndex)
+			|| !contains(rrannotations, firstIndex)) {
 		cerr << "first index: " << firstIndex << endl;
 		cerr << "second index: " << secondIndex << endl;
 		throw Exception("ERROR in RR_Tree::correlate: no such index\n");
 	}
-	if (_annotations.at(firstIndex)->getType() != "float"
-			|| _annotations.at(secondIndex)->getType() != "float") {
-		cerr << "first index: " << _annotations.at(firstIndex)->getType()
+	if (rrannotations.at(firstIndex)->getType() != "float"
+			|| rrannotations.at(secondIndex)->getType() != "float") {
+		cerr << "first index: " << rrannotations.at(firstIndex)->getType()
 				<< endl;
-		cerr << "second index: " << _annotations.at(secondIndex)->getType()
+		cerr << "second index: " << rrannotations.at(secondIndex)->getType()
 				<< endl;
 		throw Exception(
 				"ERROR in RR_Tree::correlate: annotations are not of type float!\n");
@@ -268,71 +268,71 @@ float RR_Tree::correlate(string firstIndex, string secondIndex,
 
 	TreeEvaluator TEval;
 	float corr = TEval.correlate(
-			(FloatTreeAnnotation*) _annotations.at(firstIndex),
-			(FloatTreeAnnotation*) _annotations.at(secondIndex), includeLeafs);
+			(FloatTreeAnnotation*) rrannotations.at(firstIndex),
+			(FloatTreeAnnotation*) rrannotations.at(secondIndex), includeLeafs);
 	return corr;
 }
 
 float RR_Tree::MSE(string firstIndex, string secondIndex, bool includeLeafs) {
 
-	if (!contains(_annotations, firstIndex)
-			|| !contains(_annotations, firstIndex)) {
+	if (!contains(rrannotations, firstIndex)
+			|| !contains(rrannotations, firstIndex)) {
 		cerr << "first index: " << firstIndex << endl;
 		cerr << "second index: " << secondIndex << endl;
 		throw Exception("ERROR in RR_Tree::MSE: no such index\n");
 	}
-	if (_annotations.at(firstIndex)->getType() != "float"
-			|| _annotations.at(secondIndex)->getType() != "float") {
-		cerr << "first index: " << _annotations.at(firstIndex)->getType()
+	if (rrannotations.at(firstIndex)->getType() != "float"
+			|| rrannotations.at(secondIndex)->getType() != "float") {
+		cerr << "first index: " << rrannotations.at(firstIndex)->getType()
 				<< endl;
-		cerr << "second index: " << _annotations.at(secondIndex)->getType()
+		cerr << "second index: " << rrannotations.at(secondIndex)->getType()
 				<< endl;
 		throw Exception(
 				"ERROR in RR_Tree::MSE: annotations are not of type float!\n");
 	}
 
 	TreeEvaluator TEval;
-	float corr = TEval.MSE((FloatTreeAnnotation*) _annotations.at(firstIndex),
-			(FloatTreeAnnotation*) _annotations.at(secondIndex), includeLeafs);
+	float corr = TEval.MSE((FloatTreeAnnotation*) rrannotations.at(firstIndex),
+			(FloatTreeAnnotation*) rrannotations.at(secondIndex), includeLeafs);
 	return corr;
 }
 
 float RR_Tree::MPE(string firstIndex, string secondIndex) {
 
-	if (!contains(_annotations, firstIndex)
-			|| !contains(_annotations, firstIndex)) {
+	if (!contains(rrannotations, firstIndex)
+			|| !contains(rrannotations, firstIndex)) {
 		cerr << "first index: " << firstIndex << endl;
 		cerr << "second index: " << secondIndex << endl;
 		throw Exception("ERROR in RR_Tree::MPE: no such index\n");
 	}
-	if (_annotations.at(firstIndex)->getType() != "float"
-			|| _annotations.at(secondIndex)->getType() != "float") {
-		cerr << "first index: " << _annotations.at(firstIndex)->getType()
+	if (rrannotations.at(firstIndex)->getType() != "float"
+			|| rrannotations.at(secondIndex)->getType() != "float") {
+		cerr << "first index: " << rrannotations.at(firstIndex)->getType()
 				<< endl;
-		cerr << "second index: " << _annotations.at(secondIndex)->getType()
+		cerr << "second index: " << rrannotations.at(secondIndex)->getType()
 				<< endl;
 		throw Exception(
 				"ERROR in RR_Tree::MPE: annotations are not of type float!\n");
 	}
 
 	TreeEvaluator TEval;
-	float corr = TEval.MPE((FloatTreeAnnotation*) _annotations.at(firstIndex),
-			(FloatTreeAnnotation*) _annotations.at(secondIndex));
+	float corr = TEval.MPE((FloatTreeAnnotation*) rrannotations.at(firstIndex),
+			(FloatTreeAnnotation*) rrannotations.at(secondIndex));
 	return corr;
 }
 
 void RR_Tree::clear() {
 
 	map<string, TreeAnnotation*>::iterator iter;
-	for (iter = _annotations.begin(); iter != _annotations.end(); iter++) {
+	for (iter = rrannotations.begin(); iter != rrannotations.end(); iter++) {
 		delete iter->second;
 	}
 
-	if (_root != 0) {
-		delete _root;
-		_root = 0;
+	if (rrroot != 0) {
+		delete rrroot;
+		rrroot = 0;
 	}
-	_annotations.clear();
+	rrannotations.clear();
 }
 
 void RR_Tree::setRandom(size_t size, string path) {
@@ -353,12 +353,12 @@ void RR_Tree::setRandom(size_t size, string path) {
 	this->clear();
 	cerr << " removed old tree, updating now" << std::endl;
 	NewickParser nwp(path);
-	_root = (RR_Node*) nwp.getTree();
-	_size = size;
+	rrroot = (RR_Node*) nwp.getTree();
+	rrsize = size;
 }
 
 void RR_Tree::printLeafFeatures(string path, RidgeRaceIndex rs) {
-	TreeExtractor TE(_root);
+	TreeExtractor TE(rrroot);
 	TreeAnnotation* as = this->getAnnotation(rs);
 	if (as->getType() != "float") {
 		throw Exception(
@@ -368,7 +368,7 @@ void RR_Tree::printLeafFeatures(string path, RidgeRaceIndex rs) {
 }
 
 LeafFeatureData RR_Tree::getLeafFeatureData(RidgeRaceIndex rs) {
-	TreeExtractor TE(_root);
+	TreeExtractor TE(rrroot);
 	FloatTreeAnnotation* as;
 	if (this->hasAnnotation(rs)) {
 		as = (FloatTreeAnnotation*) this->getAnnotation(rs);
@@ -392,39 +392,39 @@ LeafFeatureData RR_Tree::getLeafFeatureData(RidgeRaceIndex rs) {
  }*/
 
 void RR_Tree::setSimulator(RegimeSpecification rs) {
-	_S = Simulator(_root, rs);
-	_rs = rs;
+	rrS = Simulator(rrroot, rs);
+	rrrs = rs;
 
-	_simulatorIsSet = true;
+	rrsimulatorIsSet = true;
 	//addIndex(simulationIndex, "simulation");
 	//addIndex(regimeIndex, "regime");
 	//addIndex(stdIndex, "std");
 }
 
 void RR_Tree::setBiasedSimulator(RegimeSpecification rs) {
-	_S = BiasedSimulator(_root, rs);
-	_rs = rs;
+	rrS = BiasedSimulator(rrroot, rs);
+	rrrs = rs;
 
-	_simulatorIsSet = true;
+	rrsimulatorIsSet = true;
 	//addIndex(simulationIndex, "simulation");
 	//addIndex(regimeIndex, "regime");
 	//addIndex(stdIndex, "std");
 }
 
 RegimeSpecification RR_Tree::getRegimeSpecification() {
-	if (!_simulatorIsSet) {
+	if (!rrsimulatorIsSet) {
 		throw Exception(
 				"ERROR in RR_Tree::getRegimeSpecification: please set simulator!\n");
 	}
-	return _rs;
+	return rrrs;
 }
 
 void RR_Tree::simulateBM() {
-	if (!_simulatorIsSet) {
+	if (!rrsimulatorIsSet) {
 		throw Exception(
 				"ERROR in RR_Tree::simulateBM: please set simulator!\n");
 	}
-	SimulationPackage sm = _S.simulate();
+	SimulationPackage sm = rrS.simulate();
 	this->addAnnotation(Constants::regimeIndex, sm.regimeAnno);
 	this->addAnnotation(Constants::simulationIndex, sm.simulation);
 	this->addAnnotation(Constants::stdIndex, sm.stdAnno);
@@ -432,18 +432,18 @@ void RR_Tree::simulateBM() {
 }
 
 size_t RR_Tree::getSize() {
-	return _size;
+	return rrsize;
 }
 
 void RR_Tree::annotateNodeHeight() {
 
 	// if we called annotateNodeHeight before, do nothing
-	if (_root->_height != -1) {
+	if (rrroot->_height != -1) {
 		return;
 	}
 	// otherwise run through the tree once
 	else {
-		_root->annotateNodeHeight();
+		rrroot->annotateNodeHeight();
 	}
 }
 
@@ -469,47 +469,47 @@ int RR_Tree::annotateNodeSupport(RR_Node* curNode) {
 void RR_Tree::annotateNodeSupport() {
 	IntegerTreeAnnotation* nSupport = new IntegerTreeAnnotation("support");
 	this->addAnnotation("support", nSupport);
-	annotateNodeSupport(_root);
+	annotateNodeSupport(rrroot);
 }
 
 RR_Node* RR_Tree::getRoot() {
-	return _root;
+	return rrroot;
 }
 
 void RR_Tree::addAnnotation(string key, TreeAnnotation* anno, bool deleteOld) {
 
-	if (contains(_annotations, key)) {
+	if (contains(rrannotations, key)) {
 		if (deleteOld) {
-			delete _annotations[key];
-			_annotations[key] = 0;
+			delete rrannotations[key];
+			rrannotations[key] = 0;
 		}
 		else {
 			//cerr << "---WARNING in RR_Tree::addAnnotation: overwriting annotation ";
 			//cerr << key << " with " << anno->getDescription() << '\n';
 		}
 	}
-	_annotations[key] = anno;
+	rrannotations[key] = anno;
 
 }
 
 TreeAnnotation* RR_Tree::getAnnotation(string key) {
-	if (!contains(_annotations, key)) {
+	if (!contains(rrannotations, key)) {
 		cerr << "ERROR in RR_Tree::getAnnotation: did not find annotation ";
 		cerr << key << '\n';
 		throw Exception("index not found\n");
 	}
 
-	return _annotations[key];
+	return rrannotations[key];
 
 }
 
 bool RR_Tree::hasAnnotation(string key) {
-	return (contains(_annotations, key));
+	return (contains(rrannotations, key));
 }
 
 void RR_Tree::dropAnnotation(string key) {
-	if (contains(_annotations, key)) {
-		_annotations.erase(key);
+	if (contains(rrannotations, key)) {
+		rrannotations.erase(key);
 	}
 }
 

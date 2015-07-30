@@ -41,7 +41,7 @@ OBJ_Emaeus= \
 	Emaeus/src/System.o \
 
 all: writeSettings checkDependencies createBuildDir $(OBJ_RR) $(OBJ_Emaeus)
-	$(CXX) -o "$(BUILDDIR)$(PROGNAME)" $(patsubst src/%, build/%, $(OBJ_RR)) $(patsubst Emaeus/src/%, build/%, $(OBJ_Emaeus)) 
+	$(CXX) $(LDFLAGS) -o "$(BUILDDIR)$(PROGNAME)" $(patsubst src/%, build/%, $(OBJ_RR)) $(patsubst Emaeus/src/%, build/%, $(OBJ_Emaeus)) 
 	
 createBuildDir: 
 	if [ ! -d "$(BUILDDIR)" ]; then mkdir $(BUILDDIR); fi;
@@ -80,6 +80,7 @@ install:
 	for x in `find $(PREFIX)/share/$(PROGNAME) -type f`; do chmod 644 $$x; done;
 	if [ ! -d "$(PREFIX)/share/$(PROGNAME)/scripts" ]; then $(INSTALL) -d $(PREFIX)/share/$(PROGNAME)/scripts; fi;
 	$(INSTALL) -m 755 build/$(PROGNAME) $(PREFIX)/bin;
+	$(INSTALL) -m 755 $(PROGNAME)_wrapper $(PREFIX)/bin;
 	$(INSTALL) -m 644 scripts/*.r $(PREFIX)/share/$(PROGNAME)/scripts/;
 	@echo "";
 	@echo "'$(PROGNAME)' has been successfully installed in $(PREFIX).";

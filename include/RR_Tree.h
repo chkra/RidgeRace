@@ -36,18 +36,18 @@ class RR_Tree {
 
 private:
 
-	RR_Node* _root;
+	RR_Node* rrroot;
 
-	Simulator _S;
-	RegimeSpecification _rs;
+	Simulator rrS;
+	RegimeSpecification rrrs;
 
-	bool _simulatorIsSet;
+	bool rrsimulatorIsSet;
 
-	size_t _size;
+	size_t rrsize;
 
 	//map<int, string> _indexNames;
 
-	map<RidgeRaceIndex, float> _summary;
+	map<RidgeRaceIndex, float> rrsummary;
 
 	//map<string, TreeAnnotation* > _annotations;
 
@@ -67,7 +67,7 @@ private:
 
 public:
 
-	map<string, TreeAnnotation* > _annotations;
+	map<string, TreeAnnotation* > rrannotations;
 
 	RR_Tree();
 
