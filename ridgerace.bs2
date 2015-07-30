@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:runnableItem xmlns:ns2="bibiserv:de.unibi.techfak.bibiserv.cms.microhtml" xmlns:ns3="bibiserv:de.unibi.techfak.bibiserv.cms.minihtml" xmlns:ns4="bibiserv:de.unibi.techfak.bibiserv.cms" xmlns:ns5="http://java.sun.com/dtd/jnlp-6.0.dtd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ridgerace" xsi:schemaLocation="bibiserv:de.unibi.techfak.bibiserv.cms http://bibiserv.techfak.uni-bielefeld.de/xsd/bibiserv2/BiBiServAbstraction.xsd">
+    <ns4:name xml:lang="en">RidgeRace</ns4:name>
+    <ns4:shortDescription xml:lang="en">Ridge regression for continuous ancestral character estimation on phylogenetic trees.</ns4:shortDescription>
+    <ns4:description xml:lang="en">
+<ns2:p>
+Ancestral character state reconstruction describes a set of techniques 
+for estimating phenotypic or genetic features of species
+                     or related individuals that are the predecessors of
+ those present today. Such reconstructions can reach into the distant 
+past
+                     and can provide insights into the history of a 
+population or a set of species when fossil data are not available, or 
+they
+                     can be used to test evolutionary hypotheses, e.g. 
+on the co-evolution of traits. Typical methods for ancestral character 
+state
+                     reconstruction of continuous characters consider 
+the phylogeny of the underlying data and estimate the ancestral process 
+along
+                     the branches of the tree. They usually assume a 
+Brownian motion model of character evolution or extensions thereof, 
+requiring
+                     specific assumptions on the rate of phenotypic 
+evolution</ns2:p>
+        <ns2:p/>
+        <ns2:p>With RidgeRace, we suggest using ridge regression to infer rates for each branch of the tree and the ancestral values at each inner node.</ns2:p>
+</ns4:description>
+    <ns4:toolTipText xml:lang="en">Ridge regression for continuous ancestral character estimation on phylogenetic trees.</ns4:toolTipText>
+    <ns4:keywords xml:lang="en">phylogeny  ancestral character reconstruction  continuos</ns4:keywords>
+    <ns4:responsibleAuthor>
+        <ns4:firstname>Stefan</ns4:firstname>
+        <ns4:lastname>Janssen</ns4:lastname>
+        <ns4:organisation>Helmholtz Centre for Infection Research</ns4:organisation>
+        <ns4:email>stefan.janssen@helmholtz-hzi.de</ns4:email>
+        <ns4:phone>+49 531 6181-1431</ns4:phone>
+        <ns4:adress>Inhoffenstraße 7&#xD;
+38124 Braunschweig</ns4:adress>
+    </ns4:responsibleAuthor>
+    <ns4:references>
+        <ns4:reference>@article{kra:mcha:2014,
+author={Kratsch, Christina and McHardy, Alice Carolyn},
+title={RidgeRace: ridge regression for continuous ancestral character estimation on phylogenetic trees},
+journal={Bioinformatics},
+year={2014},
+doi={10.1093/bioinformatics/btu477},
+url={http://bioinformatics.oxfordjournals.org/content/30/17/i527.long}}</ns4:reference>
+    </ns4:references>
+    <ns4:executable>
+        <ns4:version>1.0</ns4:version>
+        <ns4:execInfo>
+            <ns4:path></ns4:path>
+            <ns4:callingInformation>RidgeRace_wrapper</ns4:callingInformation>
+        </ns4:execInfo>
+        <ns4:input id="ridgerace_input_phenotypes">
+            <ns4:name xml:lang="en">Phenotypes</ns4:name>
+            <ns4:shortDescription xml:lang="en">A file holding the phenotypes for leaf nodes of the phylogenetic tree. The file must have exactly two tabulator separated columns. The first c</ns4:shortDescription>
+            <ns4:description xml:lang="en">
+<ns2:p>
+A file holding the phenotypes for leaf nodes of the phylogenetic tree. The file must have exactly two tabulator separated columns. The first column must hold the leaf node name, the second column is for the continuous phenotypic value, i.e. some floating point number. Thus, for a tree of 10 leaves, this file must have 10 rows.</ns2:p>
+</ns4:description>
+            <ns4:type>AlignmentML_AAamb</ns4:type>
+            <ns4:handling>file</ns4:handling>
+            <ns4:streamsSupported>false</ns4:streamsSupported>
+        </ns4:input>
+        <ns4:input id="ridgerace_input_tree">
+            <ns4:name xml:lang="en">Tree</ns4:name>
+            <ns4:shortDescription xml:lang="en">A phylogenetic tree, i.e. topology and branch length in Newick format.</ns4:shortDescription>
+            <ns4:description xml:lang="en">
+A phylogenetic tree, i.e. topology and branch length in Newick format.
+</ns4:description>
+            <ns4:type>ToolDependentRepresentation</ns4:type>
+            <ns4:handling>file</ns4:handling>
+            <ns4:streamsSupported>false</ns4:streamsSupported>
+        </ns4:input>
+        <ns4:output id="ridgerace_output_nexus_output">
+            <ns4:name xml:lang="en">NEXUS output</ns4:name>
+            <ns4:shortDescription xml:lang="en">Two phylogenetic trees with reconstructed ancestral states. First with default lambda, second with best found lambda. Format is NEXUS like.</ns4:shortDescription>
+            <ns4:description xml:lang="en">
+Two phylogenetic trees with reconstructed ancestral states. First with default lambda, second with best found lambda. Format is NEXUS like.
+
+</ns4:description>
+            <ns4:type>ToolDependentRepresentation</ns4:type>
+            <ns4:handling>file</ns4:handling>
+        </ns4:output>
+        <ns4:function id="ridgerace_function_performer">
+            <ns4:name xml:lang="en">Performer</ns4:name>
+            <ns4:shortDescription xml:lang="en">Will perform ridge race reconstruction on real data.</ns4:shortDescription>
+            <ns4:inputref ref="ridgerace_input_tree"/>
+            <ns4:inputref ref="ridgerace_input_phenotypes"/>
+            <ns4:outputref ref="ridgerace_output_nexus_output"/>
+            <ns4:paramAndInputOutputOrder>
+                <ns4:reference>ridgerace_input_tree</ns4:reference>
+                <ns4:reference>ridgerace_input_phenotypes</ns4:reference>
+                <ns4:reference>ridgerace_output_nexus_output</ns4:reference>
+            </ns4:paramAndInputOutputOrder>
+            <ns4:example>
+                <ns4:name xml:lang="en">amoA</ns4:name>
+                <ns4:description xml:lang="en">In a recent study on the ecology and evolutionary history of terrestrial thaumarchaeota (Gubry-Rangin et al., 2014, in prep.), we have analyzed the influence of the pH value of soil as an environmental factor that controls the adaptation of a specific lineage of archaea capable of ammonia oxidation (see Gubry-Rangin and Hai (2011) and Nicolet al. (2008) for details on the ecology and terrestrial distribution of thaumarchaeota). An additional RidgeRace analysis of the pH preferences of thaumarchaeota samples using a phylogeny inferred on amoA gene sequences  reconstructed the pH value of the root of the tree, i.e. the common ancestor of all thaumarchaeota, to 6.18, a value very similar to the reconstruction of 6.3 under a Brownian Motion model performed by the authors using the "ape" package in R (Paradis et al., 2004; R Core Team, 2012) 2 . It also revealed that the phenotype (pH preference) has often evolved quicker on ancestral than on more recent branches of the tree, and in particular on branches directly after the separation of certain highly specialized pH clusters, such as the three main abundant clusters of terrestrial thaumarchaeota. This might indicate a particularly high speed of molecular adaptation. RidgeRace assigns similarly high rates to a few samples with a pH preference that strongly deviates from the mean of their clade (marked by red bars). This can be considered an artifact of the method, but it also used as an indicator of phenotypic outliers.</ns4:description>
+                <ns4:prop idref="ridgerace_input_tree">KCgoKEMxNV9TMV8yM18zOjAuMDU0MjM1NTUzNzksKChDMTRfUzQ3XzIzN18yOjAuMDM0Mzk5Mzk1&#xD;
+NzUsKChDMTRfUzE3XzE0XzEyOjAuMDIyMjQ0MTQ4MzIsKEMxNV9TMTdfMF8xNjU6MC4wMDg3ODA3&#xD;
+NTUwOTcsQzE1X1MxN18yODFfMjowLjAwODc4MDc1NTA5Nyk6MC4wMTM0NjMzOTMyMik6MC4wMDgy&#xD;
+ODQyMzMzMDQsQzE0X1MxNV8xNTlfMjowLjAzMDUyODM4MTYyKTowLjAwMzg3MTAxNDEzKTowLjAw&#xD;
+NzMxOTc4NDAwNCwoKEMxNF9TNDFfNTYzXzI6MC4wMjA3OTM2MTQ5NywoQzE0X1MxNV8xMzVfMjow&#xD;
+LjAxNDQyMTYyNTk3LEMxNF9TMjRfOTRfMjowLjAxNDQyMTYyNTk3KTowLjAwNjM3MTk4ODk5NSk6&#xD;
+MC4wMTQxNDY2MDI0MywoKEMxNF9TMTVfOTBfMjowLjAyODI2NTI1MTI5LChDMTRfUzBfMF8yOTg6&#xD;
+MC4wMTcxNTg0Njc3OCxDMTRfUzE3XzEyM18yOjAuMDE3MTU4NDY3NzgpOjAuMDExMTA2NzgzNTEp&#xD;
+OjAuMDAxNzk0NTk4MzAxLChDMTRfUzEyXzEwNV8yOjAuMDI1MDYyMTMwNSxDMTRfUzM2XzE0NF8z&#xD;
+OjAuMDI1MDYyMTMwNSk6MC4wMDQ5OTc3MTkwOSk6MC4wMDQ4ODAzNjc4MDYpOjAuMDA2Nzc4OTYy&#xD;
+MzYxKTowLjAxMjUxNjM3NDA0KTowLjAxMzM0NzA5Nzk1LChDMTRfUzFfMTBfNTowLjA0MDkzODU5&#xD;
+Mzc2LChDMTRfUzI1XzY0OV8zOjAuMDE1NDg3MDEwMjIsQzE0X1MxNV8xM183OjAuMDE1NDg3MDEw&#xD;
+MjIpOjAuMDI1NDUxNTgzNTQpOjAuMDI2NjQ0MDU3OTgpOjAuMDI4NDk5NzE4MTcsKChDMTdfUzM3&#xD;
+XzExNl8zOjAuMDQ4MTA3NDMzOTgsKEMxNl9TMzdfMjAxXzI6MC4wMjA3NTYxNzQyNCxDMTZfUzE2&#xD;
+XzE1MF8zOjAuMDIwNzU2MTc0MjQpOjAuMDI3MzUxMjU5NzQpOjAuMDExNjI0NzMyNzEsKEMxOF9T&#xD;
+MzlfMjIzXzI6MC4wMTY4MjQ2ODQ5MyxDMThfUzQ0XzIwMF8yOjAuMDE2ODI0Njg0OTMpOjAuMDQy&#xD;
+OTA3NDgxNzUpOjAuMDM2MzUwMjAzMjIpOjAuMDM2Mzg3NTk5MzMsKCgoQzEzX1MyM18xMDdfMzow&#xD;
+LjAyMzQ0OTE4MTYxLChDMTNfUzE2XzY0XzI6MC4wMTc1MzIzODkyNixDMTNfUzM4XzM1Ml8yOjAu&#xD;
+MDE3NTMyMzg5MjYpOjAuMDA1OTE2NzkyMzUpOjAuMDIzMjE5NDk1NjcsKEMxM19TMjNfMTI0XzM6&#xD;
+MC4wMzQyMDI4ODEyNywoQzEzX1MyMF8zMDZfMjowLjAyMTM3ODAwNzQ0LEMxM19TMTlfMTM2XzQ6&#xD;
+MC4wMjEzNzgwMDc0NCk6MC4wMTI4MjQ4NzM4Myk6MC4wMTI0NjU3OTYwMSk6MC4wNDk2MTk4NTIy&#xD;
+OSwoKCgoQzRfUzM3XzIwOF8yOjAuMDE2ODc3ODQ0MTIsQzRfUzExXzI3M18yOjAuMDE2ODc3ODQ0&#xD;
+MTIpOjAuMDE2ODk4NjQ5ODksQzRfUzE2XzU0XzI6MC4wMzM3NzY0OTQwMSk6MC4wMTQ4NzYwMzg1&#xD;
+NCxDNF9TMzdfMTc4XzM6MC4wNDg2NTI1MzI1NSk6MC4wMzA0MDc2NzAzNywoKCgoQzEyX1MyN18z&#xD;
+NTJfMzowLjA0NTg4OTA0ODc1LCgoQzFfUzEwXzEwOF80OjAuMDM1OTU0OTgyOTMsKEMyX1MxMF8x&#xD;
+MF8xNzowLjAzMTgzMDM3ODczLChDMV9TMTNfNTNfMjowLjAyNDg0MzcwMzU0LEMxX1MyN18xMDQ5&#xD;
+XzI6MC4wMjQ4NDM3MDM1NCk6MC4wMDY5ODY2NzUxOTMpOjAuMDA0MTI0NjA0MTk3KTowLjAwNjcw&#xD;
+Mjg2Njg1NSwoKEMxX1MzN18zNzhfMjowLjAxNzM1NzQxNixDMV9TMjdfMTAwNV8yOjAuMDE3MzU3&#xD;
+NDE2KTowLjAxMTYxNDAxODMsKEMxX1MxM18xMV8xNjowLjAyNDE3NDU0MDgxLEMxX1MxMV8xMDZf&#xD;
+NjowLjAyNDE3NDU0MDgxKTowLjAwNDc5Njg5MzQ4Nyk6MC4wMTM2ODY0MTU0OCk6MC4wMDMyMzEx&#xD;
+OTg5Nyk6MC4wMDcyOTUwMjU3NTEsQzE5X1MzMV8zMjhfMjowLjA1MzE4NDA3NDUpOjAuMDA1NzA4&#xD;
+MTM0ODkzLCgoQzlfUzE0XzExNl8yOjAuMDI3Nzk4ODU0LCgoQzlfUzM3XzEwMV8zOjAuMDExODA5&#xD;
+NTQyMjYsQzlfUzM3XzI1NV8yOjAuMDExODA5NTQyMjYpOjAuMDA5Nzc4NDQwMjg5LEM5X1MyN18x&#xD;
+MDc1XzI6MC4wMjE1ODc5ODI1NSk6MC4wMDYyMTA4NzE0NTIpOjAuMDE0MDIxNDUxNzksQzVfUzM0&#xD;
+XzQwMl8yOjAuMDQxODIwMzA1NzkpOjAuMDE3MDcxOTAzNik6MC4wMTIyMDg1NDEwOSwoKCgoQzNf&#xD;
+UzE2XzExMV8zOjAuMDI2NzUwMjk4OCwoQzNfUzMxXzIyMF8zOjAuMDE1Mjc5NDcxMjEsQzNfUzE5&#xD;
+XzE1Nl80OjAuMDE1Mjc5NDcxMjEpOjAuMDExNDcwODI3NTkpOjAuMDA3NDkyMzg2MjI4LEMzX1Mx&#xD;
+M18xMzRfMzowLjAzNDI0MjY4NTAzKTowLjAyMzgzMTU1OTI3LCgoQzEyX1MxMV8wXzkzOjAuMDQx&#xD;
+MjkxMjYzNzcsKCgoQzhfUzIzXzU0Nl8yOjAuMDE5Mzc4NzkzMSxDOF9TMTBfMTAyXzQ6MC4wMTkz&#xD;
+Nzg3OTMxKTowLjAwNTU1NjI5MzIzMSwoQzhfUzIwXzU1NV8yOjAuMDE2NjA1NzY5ODEsKEM4X1Mx&#xD;
+MF8zMDFfMjowLjAwODc5MDY3ODY2LEM4X1M0NV80NjNfMjowLjAwODc5MDY3ODY2KTowLjAwNzgx&#xD;
+NTA5MTE1Mik6MC4wMDgzMjkzMTY1MjQpOjAuMDA2NTQ4ODcwNjgyLEM4X1MzOF8yNDBfMjowLjAz&#xD;
+MTQ4Mzk1NzAyKTowLjAwOTgwNzMwNjc1Myk6MC4wMTI1MjY3NzAzOSwoQzdfUzEwXzEwNV8zOjAu&#xD;
+MDQ0NTY3MDgzMTMsQzZfUzEwXzBfMzYyOjAuMDQ0NTY3MDgzMTMpOjAuMDA5MjUwOTUxMDI4KTow&#xD;
+LjAwNDI1NjIxMDEzOSk6MC4wMDU1MDY5MTY1NzgsKChDMTFfUzQxXzQ5NV8yOjAuMDM4MTExNTI3&#xD;
+NjIsKCgoQzExX1M5XzE0M18yOjAuMDI0NDM1OTE1MiwoQzExX1M5XzE0OV8yOjAuMDA3NDU2MDY2&#xD;
+NjM4LEMxMV9TMV8xOV8zOjAuMDA3NDU2MDY2NjM4KTowLjAxNjk3OTg0ODU2KTowLjAwNTk1ODU3&#xD;
+OTQ5MywoQzExX1M0MF8xNDFfMjowLjAyMzY0NjMwMjEsKEMxMV9TMjlfMTRfMTE6MC4wMTMyODAz&#xD;
+MDAyOSxDMTFfUzEwXzEwM18zOjAuMDEzMjgwMzAwMjkpOjAuMDEwMzY2MDAxODEpOjAuMDA2NzQ4&#xD;
+MTkyNTg5KTowLjAwNTA3NTc0MjQ5OSwoKEMxMV9TMTJfMTA5XzM6MC4wMDk4NTYyOTIyMDgsQzEx&#xD;
+X1MwXzEwXzg6MC4wMDk4NTYyOTIyMDgpOjAuMDE2OTk0MTg5NDUsKChDMTFfUzEyXzE0Ml8yOjAu&#xD;
+MDE5MzUyNjgyOTYsQzExX1MxMF8yMzBfMzowLjAxOTM1MjY4Mjk2KTowLjAwNTI3MTI0MjM4Niwo&#xD;
+QzExX1MxN18xNDJfMzowLjAxNjA5MTUxNzczLEMxMV9TMF8yXzU5OjAuMDE2MDkxNTE3NzMpOjAu&#xD;
+MDA4NTMyNDA3NjE4KTowLjAwMjIyNjU1NjMwNSk6MC4wMDg2MTk3NTU1MzQpOjAuMDAyNjQxMjkw&#xD;
+NDMxKTowLjAxNTU2MjM4MDIzLEMxMF9TMTBfMzM4XzQ6MC4wNTM2NzM5MDc4NSk6MC4wMDk5MDcy&#xD;
+NTMwMjUpOjAuMDA3NTE5NTg5NjEyKTowLjAwNzk1OTQ1MjQzMSk6MC4wMTcyMjgzMjY2NSk6MC4w&#xD;
+MzYxODE0Mzk2Nik7DQo=&#xD;
+</ns4:prop>
+                <ns4:prop idref="ridgerace_input_phenotypes">QzFfUzEwXzEwOF80CTguMDINCkMxX1MxMV8xMDZfNgk3LjQyDQpDMV9TMTNfMTFfMTYJOC40MQ0K&#xD;
+QzFfUzEzXzUzXzIJOC4zOA0KQzFfUzI3XzEwMDVfMgk4LjA0DQpDMV9TMjdfMTA0OV8yCTguMDQN&#xD;
+CkMxX1MzN18zNzhfMgk4LjQ2DQpDMTBfUzEwXzMzOF80CTcNCkMxMV9TMF8xMF84CTUuNDYNCkMx&#xD;
+MV9TMF8yXzU5CTMuNzgNCkMxMV9TMV8xOV8zCTQuNzINCkMxMV9TMTBfMTAzXzMJNS42NA0KQzEx&#xD;
+X1MxMF8yMzBfMwk0LjgyDQpDMTFfUzEyXzEwOV8zCTUuNDcNCkMxMV9TMTJfMTQyXzIJNC4yOA0K&#xD;
+QzExX1MxN18xNDJfMwkzLjk3DQpDMTFfUzI5XzE0XzExCTMuODUNCkMxMV9TNDBfMTQxXzIJNC41&#xD;
+DQpDMTFfUzQxXzQ5NV8yCTQuNDYNCkMxMV9TOV8xNDNfMgk0LjE2DQpDMTFfUzlfMTQ5XzIJNC4x&#xD;
+Ng0KQzEyX1MxMV8wXzkzCTguMTQNCkMxMl9TMjdfMzUyXzMJOC4wNA0KQzEzX1MxNl82NF8yCTYu&#xD;
+NjgNCkMxM19TMTlfMTM2XzQJNS4zNw0KQzEzX1MyMF8zMDZfMgk2LjI1DQpDMTNfUzIzXzEwN18z&#xD;
+CTYuNw0KQzEzX1MyM18xMjRfMwk2LjY2DQpDMTNfUzM4XzM1Ml8yCTYuNjgNCkMxNF9TMF8wXzI5&#xD;
+OAk0LjQ2DQpDMTRfUzFfMTBfNQk0Ljk0DQpDMTRfUzEyXzEwNV8yCTUuNDcNCkMxNF9TMTVfMTNf&#xD;
+Nwk1LjExDQpDMTRfUzE1XzEzNV8yCTQuNzkNCkMxNF9TMTVfMTU5XzIJNC45OA0KQzE0X1MxNV85&#xD;
+MF8yCTQuNTENCkMxNF9TMTdfMTIzXzIJNC4wMQ0KQzE0X1MxN18xNF8xMgkzLjk4DQpDMTRfUzI0&#xD;
+Xzk0XzIJNS40Ng0KQzE0X1MyNV82NDlfMwk1LjYxDQpDMTRfUzM2XzE0NF8zCTUuNTQNCkMxNF9T&#xD;
+NDFfNTYzXzIJNQ0KQzE0X1M0N18yMzdfMgk1LjAzDQpDMTVfUzFfMjNfMwk0LjMNCkMxNV9TMTdf&#xD;
+MF8xNjUJMy44Mw0KQzE1X1MxN18yODFfMgk0LjAxDQpDMTZfUzE2XzE1MF8zCTQuMzMNCkMxNl9T&#xD;
+MzdfMjAxXzIJOC40Ng0KQzE3X1MzN18xMTZfMwk4LjQ2DQpDMThfUzM5XzIyM18yCTcuMDMNCkMx&#xD;
+OF9TNDRfMjAwXzIJNi43MQ0KQzE5X1MzMV8zMjhfMgk3LjA2DQpDMl9TMTBfMTBfMTcJNi42OA0K&#xD;
+QzNfUzEzXzEzNF8zCTcuNDcNCkMzX1MxNl8xMTFfMwk0LjMzDQpDM19TMTlfMTU2XzQJNi45Mw0K&#xD;
+QzNfUzMxXzIyMF8zCTcuMzENCkM0X1MxMV8yNzNfMgk4LjAzDQpDNF9TMTZfNTRfMgk0LjMzDQpD&#xD;
+NF9TMzdfMTc4XzMJOC40Ng0KQzRfUzM3XzIwOF8yCTguNDYNCkM1X1MzNF80MDJfMgk1Ljk2DQpD&#xD;
+Nl9TMTBfMF8zNjIJNi4zMg0KQzdfUzEwXzEwNV8zCTYuNjcNCkM4X1MxMF8xMDJfNAk2LjI0DQpD&#xD;
+OF9TMTBfMzAxXzIJNS43MQ0KQzhfUzIwXzU1NV8yCTYuNA0KQzhfUzIzXzU0Nl8yCTYuMTgNCkM4&#xD;
+X1MzOF8yNDBfMgk2LjY4DQpDOF9TNDVfNDYzXzIJNw0KQzlfUzE0XzExNl8yCTguMDINCkM5X1My&#xD;
+N18xMDc1XzIJOC4wNA0KQzlfUzM3XzEwMV8zCTguNDcNCkM5X1MzN18yNTVfMgk4LjQ2&#xD;
+</ns4:prop>
+            </ns4:example>
+        </ns4:function>
+    </ns4:executable>
+    <ns4:manual id="ridgerace_manual_manual">
+        <ns4:introductoryText xml:lang="en">
+Manual
+</ns4:introductoryText>
+        <ns4:customContent xml:lang="en">
+            <ns2:p>
+Manual content</ns2:p>
+        </ns4:customContent>
+    </ns4:manual>
+</ns4:runnableItem>
