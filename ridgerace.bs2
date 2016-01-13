@@ -3,38 +3,35 @@
     <ns4:name xml:lang="en">RidgeRace</ns4:name>
     <ns4:shortDescription xml:lang="en">Ridge regression for continuous ancestral character estimation on phylogenetic trees.</ns4:shortDescription>
     <ns4:description xml:lang="en">
-<ns2:p>
-Ancestral character state reconstruction describes a set of techniques 
-for estimating phenotypic or genetic features of species
-                     or related individuals that are the predecessors of
- those present today. Such reconstructions can reach into the distant 
-past
-                     and can provide insights into the history of a 
-population or a set of species when fossil data are not available, or 
-they
-                     can be used to test evolutionary hypotheses, e.g. 
-on the co-evolution of traits. Typical methods for ancestral character 
-state
-                     reconstruction of continuous characters consider 
-the phylogeny of the underlying data and estimate the ancestral process 
-along
-                     the branches of the tree. They usually assume a 
-Brownian motion model of character evolution or extensions thereof, 
-requiring
-                     specific assumptions on the rate of phenotypic 
-evolution</ns2:p>
-        <ns2:p/>
-        <ns2:p>With RidgeRace, we suggest using ridge regression to infer rates for each branch of the tree and the ancestral values at each inner node.</ns2:p>
+
+    
+    
+    
+    
+    <ns2:p>
+Ancestral character state reconstruction describes a set of techniques for estimating phenotypic or genetic features of species or related individuals that are the predecessors of those present today. Such reconstructions can reach into the distant past and can provide insights into the history of a population or a set of species when fossil data are not available, or they can be used to test evolutionary hypotheses, e.g. on the co-evolution of traits. Typical methods for ancestral character state reconstruction of continuous characters consider the phylogeny of the underlying data and estimate the ancestral process along the branches of the tree. They usually assume a Brownian motion model of character evolution or extensions thereof, requiring specific assumptions on the rate of phenotypic evolution.</ns2:p>
+        
+    
+    
+    
+    
+    <ns2:p/>
+        
+    
+    
+    
+    
+    <ns2:p>With RidgeRace, we suggest using ridge regression to infer rates for each branch of the tree and the ancestral values at each inner node.</ns2:p>
 </ns4:description>
     <ns4:toolTipText xml:lang="en">Ridge regression for continuous ancestral character estimation on phylogenetic trees.</ns4:toolTipText>
-    <ns4:keywords xml:lang="en">phylogeny  ancestral character reconstruction  continuos</ns4:keywords>
+    <ns4:keywords xml:lang="en">phylogeny ancestral character reconstruction continuous</ns4:keywords>
     <ns4:responsibleAuthor>
         <ns4:firstname>Stefan</ns4:firstname>
         <ns4:lastname>Janssen</ns4:lastname>
         <ns4:organisation>Helmholtz Centre for Infection Research</ns4:organisation>
         <ns4:email>stefan.janssen@helmholtz-hzi.de</ns4:email>
         <ns4:phone>+49 531 6181-1431</ns4:phone>
-        <ns4:adress>Inhoffenstraße 7&#xD;
+        <ns4:adress>Inhoffenstrasse 7&#xD;
 38124 Braunschweig</ns4:adress>
     </ns4:responsibleAuthor>
     <ns4:references>
@@ -46,23 +43,15 @@ year={2014},
 doi={10.1093/bioinformatics/btu477},
 url={http://bioinformatics.oxfordjournals.org/content/30/17/i527.long}}</ns4:reference>
     </ns4:references>
+    <ns4:customContent xml:lang="en">
+Extended Content
+</ns4:customContent>
     <ns4:executable>
         <ns4:version>1.0</ns4:version>
         <ns4:execInfo>
             <ns4:path></ns4:path>
             <ns4:callingInformation>RidgeRace_wrapper</ns4:callingInformation>
         </ns4:execInfo>
-        <ns4:input id="ridgerace_input_phenotypes">
-            <ns4:name xml:lang="en">Phenotypes</ns4:name>
-            <ns4:shortDescription xml:lang="en">A file holding the phenotypes for leaf nodes of the phylogenetic tree. The file must have exactly two tabulator separated columns. The first c</ns4:shortDescription>
-            <ns4:description xml:lang="en">
-<ns2:p>
-A file holding the phenotypes for leaf nodes of the phylogenetic tree. The file must have exactly two tabulator separated columns. The first column must hold the leaf node name, the second column is for the continuous phenotypic value, i.e. some floating point number. Thus, for a tree of 10 leaves, this file must have 10 rows.</ns2:p>
-</ns4:description>
-            <ns4:type>AlignmentML_AAamb</ns4:type>
-            <ns4:handling>file</ns4:handling>
-            <ns4:streamsSupported>false</ns4:streamsSupported>
-        </ns4:input>
         <ns4:input id="ridgerace_input_tree">
             <ns4:name xml:lang="en">Tree</ns4:name>
             <ns4:shortDescription xml:lang="en">A phylogenetic tree, i.e. topology and branch length in Newick format.</ns4:shortDescription>
@@ -71,6 +60,19 @@ A phylogenetic tree, i.e. topology and branch length in Newick format.
 </ns4:description>
             <ns4:type>ToolDependentRepresentation</ns4:type>
             <ns4:handling>file</ns4:handling>
+            <ns4:option> --tree=</ns4:option>
+            <ns4:streamsSupported>false</ns4:streamsSupported>
+        </ns4:input>
+        <ns4:input id="ridgerace_input_phenotypes">
+            <ns4:name xml:lang="en">Phenotypes</ns4:name>
+            <ns4:shortDescription xml:lang="en">A file holding the phenotypes for leaf nodes of the phylogenetic tree.</ns4:shortDescription>
+            <ns4:description xml:lang="en">
+A file holding the phenotypes for leaf nodes of the phylogenetic tree. The file must have exactly two tabulator separated columns. The first column must hold the leaf node name, the second column is for the continuous phenotypic value, i.e. some floating point number. Thus, for a tree of 10 leaves, this file must have 10 rows.
+
+</ns4:description>
+            <ns4:type>ToolDependentRepresentation</ns4:type>
+            <ns4:handling>file</ns4:handling>
+            <ns4:option> --phenotypes=</ns4:option>
             <ns4:streamsSupported>false</ns4:streamsSupported>
         </ns4:input>
         <ns4:output id="ridgerace_output_nexus_output">
@@ -78,21 +80,50 @@ A phylogenetic tree, i.e. topology and branch length in Newick format.
             <ns4:shortDescription xml:lang="en">Two phylogenetic trees with reconstructed ancestral states. First with default lambda, second with best found lambda. Format is NEXUS like.</ns4:shortDescription>
             <ns4:description xml:lang="en">
 Two phylogenetic trees with reconstructed ancestral states. First with default lambda, second with best found lambda. Format is NEXUS like.
-
 </ns4:description>
             <ns4:type>ToolDependentRepresentation</ns4:type>
-            <ns4:handling>file</ns4:handling>
+            <ns4:handling>stdout</ns4:handling>
         </ns4:output>
+        <ns4:enumParam id="ridgerace_parameter_verbose">
+            <ns4:name xml:lang="en">Verbose</ns4:name>
+            <ns4:shortDescription xml:lang="en">If set to "yes", internal debugging information will show up in output.</ns4:shortDescription>
+            <ns4:description xml:lang="en">
+If set to "yes", internal debugging information will show up in output.
+
+</ns4:description>
+            <ns4:type>string</ns4:type>
+            <ns4:option>--verbose</ns4:option>
+            <ns4:separator>s</ns4:separator>
+            <ns4:values defaultValue="false">
+                <ns4:key>k1</ns4:key>
+                <ns4:value>=1</ns4:value>
+                <ns4:name xml:lang="en">yes</ns4:name>
+            </ns4:values>
+            <ns4:values defaultValue="true">
+                <ns4:key>k2</ns4:key>
+                <ns4:value>=0</ns4:value>
+                <ns4:name xml:lang="en">no</ns4:name>
+            </ns4:values>
+            <ns4:guiElement>SELECTONERADIO</ns4:guiElement>
+        </ns4:enumParam>
         <ns4:function id="ridgerace_function_performer">
             <ns4:name xml:lang="en">Performer</ns4:name>
             <ns4:shortDescription xml:lang="en">Will perform ridge race reconstruction on real data.</ns4:shortDescription>
+            <ns4:description xml:lang="en">
+Will perform ridge race reconstruction on real data.
+</ns4:description>
             <ns4:inputref ref="ridgerace_input_tree"/>
             <ns4:inputref ref="ridgerace_input_phenotypes"/>
             <ns4:outputref ref="ridgerace_output_nexus_output"/>
+            <ns4:paramGroup id="ridgerace_paramgroup_all">
+                <ns4:paramref ref="ridgerace_parameter_verbose"/>
+            </ns4:paramGroup>
             <ns4:paramAndInputOutputOrder>
+                <ns4:additionalString>--binaryname=/root/bin/RidgeRace</ns4:additionalString>
                 <ns4:reference>ridgerace_input_tree</ns4:reference>
                 <ns4:reference>ridgerace_input_phenotypes</ns4:reference>
                 <ns4:reference>ridgerace_output_nexus_output</ns4:reference>
+                <ns4:reference>ridgerace_parameter_verbose</ns4:reference>
             </ns4:paramAndInputOutputOrder>
             <ns4:example>
                 <ns4:name xml:lang="en">amoA</ns4:name>
@@ -182,15 +213,46 @@ X1MzOF8yNDBfMgk2LjY4DQpDOF9TNDVfNDYzXzIJNw0KQzlfUzE0XzExNl8yCTguMDINCkM5X1My&#xD
 N18xMDc1XzIJOC4wNA0KQzlfUzM3XzEwMV8zCTguNDcNCkM5X1MzN18yNTVfMgk4LjQ2&#xD;
 </ns4:prop>
             </ns4:example>
+            <ns4:example>
+                <ns4:name xml:lang="en">test</ns4:name>
+                <ns4:description xml:lang="en">Just a toy example.</ns4:description>
+                <ns4:prop idref="ridgerace_input_tree">KChUQ0dBLTAyLTAwMDc6MTIuNDkyLCgoVENHQS0wMi0wMDAzOjcuNTc3LChUQ0dBLTAyLTAwMDY6&#xD;
+Ni45MTYsVENHQS0wMi0wMDA5OjcuMjc5KTo4LjM5OCk6OS4xODMsVENHQS0wMi0wMDAxOjcuNDY4&#xD;
+KToxNS40ODUpOjMyLjcwOSxUQ0dBLTAyLTAwMDQ6MzIuNzA5KTowLjAwMAo=&#xD;
+</ns4:prop>
+                <ns4:prop idref="ridgerace_input_phenotypes">VENHQS0wMi0wMDAxCTEzClRDR0EtMDItMDAwMwkxClRDR0EtMDItMDAwNAkyClRDR0EtMDItMDAw&#xD;
+Ngk1MDAKVENHQS0wMi0wMDA3CTQKVENHQS0wMi0wMDA5CTYwMAo=&#xD;
+</ns4:prop>
+                <ns4:prop idref="ridgerace_parameter_verbose">=0</ns4:prop>
+            </ns4:example>
         </ns4:function>
     </ns4:executable>
+    <ns4:downloadable id="ridgerace_file_phenotypes_for_all_mammals">
+        <ns4:name xml:lang="en">phenotypes for all mammals</ns4:name>
+        <ns4:filename>allMammals.txt</ns4:filename>
+        <ns4:shortDescription xml:lang="en">A file holding phenotypes for all mammals.</ns4:shortDescription>
+    </ns4:downloadable>
+    <ns4:view type="download" id="ridgerace_view_download">
+        <ns4:title xml:lang="en">Down</ns4:title>
+    </ns4:view>
+    <ns4:view type="submission" id="ridgerace_view_submission">
+        <ns4:title xml:lang="en">Submission</ns4:title>
+    </ns4:view>
+    <ns4:view type="webservice" id="ridgerace_view_webservice">
+        <ns4:title xml:lang="en">Web</ns4:title>
+    </ns4:view>
     <ns4:manual id="ridgerace_manual_manual">
         <ns4:introductoryText xml:lang="en">
-Manual
+
+    
+    
+    <ns2:p>
+This is the manual for the tool RidgeRace.</ns2:p>
 </ns4:introductoryText>
         <ns4:customContent xml:lang="en">
-            <ns2:p>
-Manual content</ns2:p>
-        </ns4:customContent>
+Here is some content for the manual about RidgeRace.
+
+
+</ns4:customContent>
     </ns4:manual>
 </ns4:runnableItem>
