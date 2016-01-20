@@ -21,7 +21,7 @@ make install PREFIX=/usr
 
 ####REFERENCES:  
 - Christina Kratsch and Alice C. McHardy  
-[RidgeRace: ridge regression for continuous ancestral character estimation on phylogenetic trees](http://dx.doi.org/10.1093/bioinformatics/btu477)  
+[RidgeRace: ridge regression for continuous ancestral character estimation on phylogenetic trees](https://dx.doi.org/10.1093/bioinformatics/btu477)  
 Bioinformatics (2014) 30 (17): i527-i533.  
 
 - Christina Kratsch  
