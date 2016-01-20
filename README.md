@@ -20,10 +20,10 @@ make install PREFIX=/usr
 ```
 
 ####REFERENCES:  
-Christina Kratsch and Alice C. McHardy  
+- Christina Kratsch and Alice C. McHardy  
 [RidgeRace: ridge regression for continuous ancestral character estimation on phylogenetic trees](http://dx.doi.org/10.1093/bioinformatics/btu477)  
 Bioinformatics (2014) 30 (17): i527-i533.  
 
-Christina Kratsch  
+- Christina Kratsch  
 [Computational methods to study phenotype evolution and feature selection techniques for biological data under evolutionary constraints](excerptDissChristina.pdf)  
 Dissertation (2014)
