@@ -127,7 +127,7 @@ my $HELP = <<EOF;
 # $PROGRAMNAME: ridge regression for continuous ancestral character 
 #            estimation on phylogenetic trees.
 #            version 1.0 (29.07.2015)
-#            Stefan Janssen (stefan.janssen\@helmholtz-hzi.de)
+#            Stefan Janssen (stefan.m.janssen\@gmail.com)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 USAGE: 
